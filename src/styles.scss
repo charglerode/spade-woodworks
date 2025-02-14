@@ -1,0 +1,141 @@
+// Theme Variables
+:root {
+  --primary-color: #262022;
+  --primary-dark: color-mix(in oklab, var(--primary-color), black 10%);
+  --primary-light: color-mix(in oklab, var(--primary-color), white 50%);
+
+  --secondary-color: #ce7115;
+  --secondary-dark: color-mix(in oklab, var(--secondary-color), black 20%);
+  --secondary-light: color-mix(in oklab, var(--secondary-color), white 20%);
+
+  --accent-color: #e3c765;
+  --accent-dark: color-mix(in oklab, var(--accent-color), black 20%);
+  --accent-light: color-mix(in oklab, var(--accent-color), white 20%);
+
+  --warn-color: #ce3815;
+  --warn-dark: color-mix(in oklab, var(--warn-color), black 20%);
+  --warn-light: color-mix(in oklab, var(--warn-color), white 20%);
+
+  --background-dark: color-mix(in oklab, var(--primary-color), black 20%);
+  --background-light: color-mix(in oklab, var(--primary-color), white 80%);
+
+  --text-on-light: #333;
+  --text-on-dark: #ddd;
+
+  --radius: 4px;
+}
+
+// GLOBAL
+body, button, input, textarea, label, p {
+  font-family: 'Anaheim', sans-serif;
+  color: var(--text-on-light);
+  background-color: var(--background-light);
+  margin: 0;
+  padding: 0;
+}
+
+a, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Goudy Bookletter 1911', serif;
+}
+
+section {
+  width: 70%;
+  max-width: 940px;
+  margin: 50px auto;
+}
+
+// BUTTONS
+button {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--secondary-light);
+  }
+  &:disabled {
+    background-color: var(--primary-light);
+    cursor: not-allowed;
+  }
+  
+  &:hover:not(:disabled) {
+    background-color: var(--secondary-light);
+  }
+}
+
+// FORMS
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+
+  .error {
+    color: var(--warn-color);
+    font-size: 0.85em;
+    margin-top: 5px;
+  }
+}
+
+.form-group {
+  position: relative;
+  width: 100%;
+  padding: 15px 0 0;
+  margin-top: 10px;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--primary-color);
+  outline: 0;
+  font-size: 16px;
+  color: var(--primary-color);
+  padding: 7px 0;
+  background: var(--background-light);
+  transition: border-color 0.2s;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: transparent;
+}
+
+input:placeholder-shown ~ label,
+textarea:placeholder-shown ~ label,
+select:placeholder-shown ~ label {
+  font-size: 16px;
+  cursor: text;
+  top: 20px;
+}
+
+label,
+input:focus ~ label,
+textarea:focus ~ label,
+select:focus ~ label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 12px;
+  color: var(--primary-color);
+}
+
+input:focus ~ label,
+textarea:focus ~ label,
+select:focus ~ label {
+  color: var(--secondary-color);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--secondary-color);
+}
