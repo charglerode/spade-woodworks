@@ -26,7 +26,12 @@
 }
 
 // GLOBAL
-body, button, input, textarea, label, p {
+body,
+button,
+input,
+textarea,
+label,
+p {
   font-family: 'Anaheim', sans-serif;
   color: var(--text-on-light);
   background-color: var(--background-light);
@@ -34,7 +39,13 @@ body, button, input, textarea, label, p {
   padding: 0;
 }
 
-a, h1, h2, h3, h4, h5, h6 {
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Goudy Bookletter 1911', serif;
 }
 
@@ -59,7 +70,7 @@ button {
     background-color: var(--primary-light);
     cursor: not-allowed;
   }
-  
+
   &:hover:not(:disabled) {
     background-color: var(--secondary-light);
   }
@@ -88,7 +99,9 @@ form {
   margin-top: 10px;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   width: 100%;
   border: 0;

@@ -2,20 +2,35 @@
   <!-- <h1>Our Products</h1> -->
   <div class="form-group sorting">
     <select id="sort-select" (change)="onSortChange($event)">
-      <option value="priceAsc" [selected]="selectedSort==='priceAsc'">Price: Low to High</option>
-      <option value="priceDesc" [selected]="selectedSort==='priceDesc'">Price: High to Low</option>
-      <option value="availability" [selected]="selectedSort==='availability'">Availability: In Stock Only</option>
+      <option value="priceAsc" [selected]="selectedSort === 'priceAsc'">
+        Price: Low to High
+      </option>
+      <option value="priceDesc" [selected]="selectedSort === 'priceDesc'">
+        Price: High to Low
+      </option>
+      <option value="availability" [selected]="selectedSort === 'availability'">
+        Availability: In Stock Only
+      </option>
     </select>
     <label for="sort-select">Sort by</label>
   </div>
 
   <ng-container *ngFor="let category of categories">
     <h2 class="category">{{ category }}</h2>
-    <div class="list"
-      *ngIf="groupedProducts[category] && groupedProducts[category].length > 0; else noProducts">
-      <div class="card" *ngFor="let product of groupedProducts[category]" [routerLink]="['/products', product.id]">
+    <div
+      class="list"
+      *ngIf="
+        groupedProducts[category] && groupedProducts[category].length > 0;
+        else noProducts
+      "
+    >
+      <div
+        class="card"
+        *ngFor="let product of groupedProducts[category]"
+        [routerLink]="['/products', product.id]"
+      >
         <div class="header">
-          <img [src]="product.images[0]" width="300">
+          <img [src]="product.images[0]" width="300" />
         </div>
         <div class="content">
           <h3>{{ product.name }}</h3>
@@ -23,7 +38,9 @@
             <p class="price">${{ product.price }}</p>
           </div>
         </div>
-        <ng-template #outOfStock><p class="unavailable">Out of Stock</p></ng-template>
+        <ng-template #outOfStock
+          ><p class="unavailable">Out of Stock</p></ng-template
+        >
       </div>
     </div>
     <ng-template #noProducts>

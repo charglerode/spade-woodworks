@@ -1,55 +1,26 @@
-<!-- <section>
-  <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
-    <h1>Contact Us</h1>
-    <p>Let us know if you have any questions, technical issues, need support for products you've already 
-      purchased, want a quote on a custom piece of furniture, or anything else. We're anxious to hear from you.</p>
-    <div class="form-group">
-      <input type="text" id="name" required [(ngModel)]="contact.name" name="name" placeholder="Name"/>
-      <label for="name">Name</label>
-    </div>
-    <div class="form-group">
-      <input type="email" id="email" required [(ngModel)]="contact.email" name="email" placeholder="Email"/>
-      <label for="email">Email</label>
-    </div>
-    <div class="form-group">
-      <select id="reason" required [(ngModel)]="contact.reason" name="reason" placeholder="Reason">
-        <option value="" selected>Choose One:</option>
-        <option value="quote">Quote</option>
-        <option value="products">Product Inquiry</option>
-        <option value="support">Customer Support</option>
-        <option value="technical">Technical Issue</option>
-        <option value="other">Other</option>
-      </select>
-      <label for="email">Reason</label>
-    </div>
-    <div class="form-group">
-      <textarea id="message" required [(ngModel)]="contact.message" name="message" rows="7" placeholder="Message"></textarea>
-      <label for="message">Message</label>
-    </div>
-    <button type="submit">Send Message</button>
-  </form>
-</section> -->
-
-
 <section>
   <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
     <!-- <h1>Contact Us</h1> -->
-    <p>Let us know if you have any questions, technical issues, need support for products you've already 
-      purchased, want a quote on a custom piece of furniture, or anything else. We're anxious to hear from you.</p>
+    <p>
+      Let us know if you have any questions, technical issues, need support for
+      products you've already purchased, want a quote on a custom piece of
+      furniture, or anything else. We're anxious to hear from you.
+    </p>
     <div class="form-group">
-      <input
-        type="text"
-        id="name"
-        formControlName="name"
-        placeholder="Name"
-      />
+      <input type="text" id="name" formControlName="name" placeholder="Name" />
       <label for="name">Name</label>
-      <div class="error" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+      <div
+        class="error"
+        *ngIf="
+          contactForm.get('name')?.invalid && contactForm.get('name')?.touched
+        "
+      >
         <small *ngIf="contactForm.get('name')?.errors?.['required']">
           Name is required.
         </small>
         <small *ngIf="contactForm.get('name')?.errors?.['pattern']">
-          Name must have at least 2 letters and can only include letters, hyphens, and apostrophes.
+          Name must have at least 2 letters and can only include letters,
+          hyphens, and apostrophes.
         </small>
       </div>
     </div>
@@ -61,7 +32,12 @@
         placeholder="Email"
       />
       <label for="email">Email</label>
-      <div class="error" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+      <div
+        class="error"
+        *ngIf="
+          contactForm.get('email')?.invalid && contactForm.get('email')?.touched
+        "
+      >
         <small *ngIf="contactForm.get('email')?.errors?.['required']">
           Email is required.
         </small>
@@ -71,7 +47,13 @@
       </div>
     </div>
     <div class="form-group">
-      <select id="reason" required formControlName="reason" name="reason" placeholder="Reason">
+      <select
+        id="reason"
+        required
+        formControlName="reason"
+        name="reason"
+        placeholder="Reason"
+      >
         <option value="" selected>Choose One:</option>
         <option value="quote">Quote</option>
         <option value="products">Product Inquiry</option>
@@ -94,7 +76,13 @@
         rows="7"
       ></textarea>
       <label for="message">Message</label>
-      <div class="error" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+      <div
+        class="error"
+        *ngIf="
+          contactForm.get('message')?.invalid &&
+          contactForm.get('message')?.touched
+        "
+      >
         <small *ngIf="contactForm.get('message')?.errors?.['required']">
           Message is required.
         </small>

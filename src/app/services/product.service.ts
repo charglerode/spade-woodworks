@@ -12,14 +12,15 @@ export class ProductService {
       price: 29.99,
       available: true,
       category: 'Wood Care',
-      description: 'A high-quality polish that protects and shines wood surfaces.',
+      description:
+        'A high-quality polish that protects and shines wood surfaces.',
       images: [
         'https://placehold.co/300x200/grey/white',
         'https://placehold.co/300x200/grey/black',
         'https://placehold.co/300x200/grey/red',
         'https://placehold.co/300x200/grey/orange',
-        'https://placehold.co/300x200/grey/blue'
-        ],
+        'https://placehold.co/300x200/grey/blue',
+      ],
     },
     {
       id: 2,
@@ -27,14 +28,15 @@ export class ProductService {
       price: 19.99,
       available: false,
       category: 'Wood Care',
-      description: 'Ideal oil for smooth carving and maintenance of wood art pieces.',
+      description:
+        'Ideal oil for smooth carving and maintenance of wood art pieces.',
       images: [
         'https://placehold.co/300x200/grey/white',
         'https://placehold.co/300x200/grey/black',
         'https://placehold.co/300x200/grey/red',
         'https://placehold.co/300x200/grey/orange',
-        'https://placehold.co/300x200/grey/blue'
-        ],
+        'https://placehold.co/300x200/grey/blue',
+      ],
     },
     {
       id: 3,
@@ -42,14 +44,15 @@ export class ProductService {
       price: 39.99,
       available: true,
       category: 'Crafts',
-      description: 'A beautifully handcrafted vase perfect for your home décor.',
+      description:
+        'A beautifully handcrafted vase perfect for your home décor.',
       images: [
         'https://placehold.co/300x200/grey/white',
         'https://placehold.co/300x200/grey/black',
         'https://placehold.co/300x200/grey/red',
         'https://placehold.co/300x200/grey/orange',
-        'https://placehold.co/300x200/grey/blue'
-        ],
+        'https://placehold.co/300x200/grey/blue',
+      ],
     },
     {
       id: 4,
@@ -63,8 +66,8 @@ export class ProductService {
         'https://placehold.co/300x200/grey/black',
         'https://placehold.co/300x200/grey/red',
         'https://placehold.co/300x200/grey/orange',
-        'https://placehold.co/300x200/grey/blue'
-        ],
+        'https://placehold.co/300x200/grey/blue',
+      ],
     },
     {
       id: 5,
@@ -78,8 +81,8 @@ export class ProductService {
         'https://placehold.co/300x200/grey/black',
         'https://placehold.co/300x200/grey/red',
         'https://placehold.co/300x200/grey/orange',
-        'https://placehold.co/300x200/grey/blue'
-        ],
+        'https://placehold.co/300x200/grey/blue',
+      ],
     },
     {
       id: 6,
@@ -87,14 +90,15 @@ export class ProductService {
       price: 149.99,
       available: false,
       category: 'Furniture',
-      description: 'A rustic dining table with a classic design that stands out.',
+      description:
+        'A rustic dining table with a classic design that stands out.',
       images: [
         'https://placehold.co/300x200/grey/white',
         'https://placehold.co/300x200/grey/black',
         'https://placehold.co/300x200/grey/red',
         'https://placehold.co/300x200/grey/orange',
-        'https://placehold.co/300x200/grey/blue'
-        ],
+        'https://placehold.co/300x200/grey/blue',
+      ],
     },
   ];
 

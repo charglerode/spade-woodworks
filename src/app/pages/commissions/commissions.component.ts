@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-commissions',
   imports: [],
   templateUrl: './commissions.component.html',
-  styleUrl: './commissions.component.scss'
+  styleUrl: './commissions.component.scss',
 })
-export class CommissionsComponent {
-
-}
+export class CommissionsComponent {}

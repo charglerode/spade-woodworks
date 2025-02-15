@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-shipping',
   imports: [],
   templateUrl: './shipping.component.html',
-  styleUrl: './shipping.component.scss'
+  styleUrl: './shipping.component.scss',
 })
-export class ShippingComponent {
-
-}
+export class ShippingComponent {}

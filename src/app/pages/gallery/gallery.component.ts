@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-gallery',
   imports: [],
   templateUrl: './gallery.component.html',
-  styleUrl: './gallery.component.scss'
+  styleUrl: './gallery.component.scss',
 })
-export class GalleryComponent {
-
-}
+export class GalleryComponent {}

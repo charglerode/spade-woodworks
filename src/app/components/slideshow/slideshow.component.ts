@@ -6,7 +6,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './slideshow.component.html',
-  styleUrls: ['./slideshow.component.scss']
+  styleUrls: ['./slideshow.component.scss'],
 })
 export class SlideshowComponent implements OnInit, OnDestroy {
   @Input() images: string[] = [];

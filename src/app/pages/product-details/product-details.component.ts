@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { RouterLink } from '@angular/router';
 import { Product } from '../../models/product.model';
-import { SlideshowComponent } from "../../components/slideshow/slideshow.component";
+import { SlideshowComponent } from '../../components/slideshow/slideshow.component';
 
 @Component({
   selector: 'app-product-details',
@@ -18,7 +18,7 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
   ) {}
 
   ngOnInit(): void {

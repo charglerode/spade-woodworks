@@ -1,20 +1,20 @@
 <section>
-    <button routerLink="/products">Back to Products</button>
-    <div class="details" *ngIf="product; else notFound">
-        <slideshow [images]="product.images"></slideshow>
-        <div class="header">
-            <h1>{{ product.name }}</h1>
-            <p class="price">${{ product.price }}</p>
-        </div>
-        <p *ngIf="product.description">{{ product.description }}</p>
-        <div class="actions">
-            <button [disabled]="!product.available">
-                <span *ngIf="product.available; else outOfStock">Purchase</span>
-            </button>
-        </div>
-        <ng-template #outOfStock>Out of Stock</ng-template>
+  <button routerLink="/products">Back to Products</button>
+  <div class="details" *ngIf="product; else notFound">
+    <slideshow [images]="product.images"></slideshow>
+    <div class="header">
+      <h1>{{ product.name }}</h1>
+      <p class="price">${{ product.price }}</p>
     </div>
+    <p *ngIf="product.description">{{ product.description }}</p>
+    <div class="actions">
+      <button [disabled]="!product.available">
+        <span *ngIf="product.available; else outOfStock">Purchase</span>
+      </button>
+    </div>
+    <ng-template #outOfStock>Out of Stock</ng-template>
+  </div>
 </section>
 <ng-template #notFound>
-    <p>Product not found.</p>
+  <p>Product not found.</p>
 </ng-template>

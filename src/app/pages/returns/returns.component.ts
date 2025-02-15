@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-returns',
   imports: [],
   templateUrl: './returns.component.html',
-  styleUrl: './returns.component.scss'
+  styleUrl: './returns.component.scss',
 })
-export class ReturnsComponent {
-
-}
+export class ReturnsComponent {}

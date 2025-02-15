@@ -1,52 +1,52 @@
 footer {
-    flex-shrink: 0;
-    height: 130px;
+  flex-shrink: 0;
+  height: 130px;
+  background-color: var(--primary-color);
+  padding: 20px;
+  text-align: center;
+  a {
+    color: var(--text-on-dark);
+    text-decoration: none;
+    font-size: smaller;
+    &:hover {
+      color: var(--secondary-light);
+      cursor: pointer;
+    }
+  }
+  p {
     background-color: var(--primary-color);
-    padding: 20px;
-    text-align: center;
-    a {
-        color: var(--text-on-dark);
-        text-decoration: none;
-        font-size:smaller;
-        &:hover {
-            color: var(--secondary-light);
-            cursor: pointer;
-        }
-    }
-    p {
-        background-color: var(--primary-color);
-        color: var(--text-on-dark);
-        font-size: smaller;
-    }
+    color: var(--text-on-dark);
+    font-size: smaller;
+  }
 }
 
 .cols {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 20px;
 }
 
 .col {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 0 30px;
 }
 
 .socials {
-    border-right: 1px solid var(--primary-light);
-    border-left: 1px solid var(--primary-light);
-    align-items: center;
-    gap: 15px;
+  border-right: 1px solid var(--primary-light);
+  border-left: 1px solid var(--primary-light);
+  align-items: center;
+  gap: 15px;
 }
 
 .links {
-    align-items: end;
+  align-items: end;
 }
 
 .legal {
-    align-items: start;
+  align-items: start;
 }

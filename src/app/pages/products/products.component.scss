@@ -4,7 +4,7 @@
     flex-direction: row;
     gap: 5px;
     width: 210px;
-    margin-left: auto; 
+    margin-left: auto;
     margin-right: 0;
   }
   .category {
@@ -38,7 +38,8 @@
         justify-content: space-between;
         padding: 15px;
       }
-      .price, .unavailable {
+      .price,
+      .unavailable {
         text-align: center;
         background-color: var(--primary-light);
       }
@@ -50,4 +51,3 @@
     }
   }
 }
-  
