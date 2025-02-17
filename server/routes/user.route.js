@@ -5,8 +5,9 @@ const auth = require('../controllers/auth.controller');
 const router = express.Router();
 
 router.post('/signup', auth.signup);
-
 router.post('/login', auth.login);
+router.post('/forgot', auth.forgetPassword);
+router.patch('/reset/:token', auth.resetPassword);
 
 router.route('/').get(controller.getAllUsers).post(controller.createUser);
 

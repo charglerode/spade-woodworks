@@ -1,8 +1,10 @@
+const crypto = require('crypto');
 const { promisify } = require('util');
 const User = require('../models/User');
 const catchAsync = require('../utils/catch');
 const jwt = require('jsonwebtoken');
 const AppError = require('../utils/error');
+const sendEmail = require('../utils/email');
 
 const sign = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -32,7 +34,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Please provide email and pasword', 400));
   }
   const user = await User.findOne({ email }).select('+password');
-  if (!user || !(await user.validate(password, user.password))) {
+  if (!user || !(await user.validatePassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
   const token = sign(user._id);
@@ -65,7 +67,59 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('Credentials recently changed. Please login again', 401),
     );
   }
-
   req.user = fresh;
   next();
+});
+
+exports.forgetPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user)
+    return next(new AppError('There is no user with that email address', 404));
+  const token = user.resetPasswordToken();
+  await user.save({ validateBeforeSave: false });
+  const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/reset/${token}`;
+  const message = `
+    Forget your password? Follow the link <${resetUrl}> to reset your password.\n
+    If you didnt request a password reset, ignore this email`;
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Password Reset',
+      message,
+    });
+    res.status(200).json({
+      status: 'success',
+      message: 'Password reset token sent',
+    });
+  } catch (err) {
+    user.resetToken = undefined;
+    user.resetExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new AppError(`Error sending reset email. Try again later, ${err}`, 500),
+    );
+  }
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+  const user = await User.findOne({
+    resetToken: hashedToken,
+    resetExpire: { $gt: Date.now() },
+  });
+  if (!user) {
+    return next(new AppError('Token is invalid or has expired', 400));
+  }
+  user.password = req.body.password;
+  user.resetToken = undefined;
+  user.resetExpire = undefined;
+  await user.save();
+  const token = sign(user._id);
+  res.status(200).json({
+    status: 'success',
+    token,
+  });
 });
