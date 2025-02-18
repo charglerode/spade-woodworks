@@ -12,20 +12,35 @@ const sign = (id) => {
   });
 };
 
-exports.signup = catchAsync(async (req, res, next) => {
-  const user = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-  });
+const createSendToken = (user, statusCode, res) => {
   const token = sign(user._id);
-  res.status(201).json({
+  const options = {
+    expire: new Date(
+      Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
+    ),
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === 'production') {
+    options.secure = true;
+  }
+  res.cookie('jwt', token, options);
+  user.password = undefined;
+  res.status(statusCode).json({
     status: 'success',
     token,
     data: {
       user,
     },
   });
+};
+
+exports.signup = catchAsync(async (req, res, next) => {
+  const user = await User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  createSendToken(user, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -37,11 +52,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.validatePassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
-  const token = sign(user._id);
-  res.status(200).json({
-    status: 'success',
-    token,
-  });
+  createSendToken(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -117,9 +128,17 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.resetToken = undefined;
   user.resetExpire = undefined;
   await user.save();
-  const token = sign(user._id);
-  res.status(200).json({
-    status: 'success',
-    token,
-  });
+  createSendToken(user, 200, res);
+});
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select('+password');
+  if (!(await user.validatePassword(req.body.password, user.password))) {
+    return next(
+      new AppError('Your password is incorrect. Please try again', 401),
+    );
+  }
+  user.password = req.body.newPassword;
+  await user.save();
+  createSendToken(user, 200, res);
 });

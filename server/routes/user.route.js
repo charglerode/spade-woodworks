@@ -6,8 +6,11 @@ const router = express.Router();
 
 router.post('/signup', auth.signup);
 router.post('/login', auth.login);
-router.post('/forgot', auth.forgetPassword);
-router.patch('/reset/:token', auth.resetPassword);
+router.post('/forgotPassword', auth.forgetPassword);
+router.patch('/resetPassword/:token', auth.resetPassword);
+router.patch('/updatePassword', auth.protect, auth.updatePassword);
+router.patch('/updateCurrentUser', auth.protect, controller.updateCurrentUser);
+router.delete('/deleteCurrentUser', auth.protect, controller.deleteCurrentUser);
 
 router.route('/').get(controller.getAllUsers).post(controller.createUser);
 

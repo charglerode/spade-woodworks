@@ -2,7 +2,6 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const { isThisTypeNode } = require('typescript');
 
 const user = new mongoose.Schema({
   name: {
@@ -27,6 +26,11 @@ const user = new mongoose.Schema({
   modified: Date,
   resetToken: String,
   resetExpire: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 user.pre('save', async function (next) {
@@ -38,6 +42,11 @@ user.pre('save', async function (next) {
 user.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next();
   this.modified = Date.now() - 1000;
+  next();
+});
+
+user.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
   next();
 });
 
