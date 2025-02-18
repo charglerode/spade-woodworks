@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -17,9 +17,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   styleUrl: './item-details.component.scss',
 })
 export class ItemDetailsComponent {
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   itemForm: FormGroup;
   item: Product | undefined;
-  images: string[] = [];
+  images: any[] = [];
+  files!: FileList | null;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,10 +36,10 @@ export class ItemDetailsComponent {
         [Validators.required, Validators.pattern(/^[A-Za-z\s'-]{2,}$/)],
       ],
       price: ['', [Validators.required, Validators.pattern(/^[0-9\s]{1,}$/)]],
-      available: ['', [Validators.required]],
+      available: false,
       category: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      images: this.fb.array([]),
+      images: null,
     });
   }
 
@@ -45,38 +48,32 @@ export class ItemDetailsComponent {
     const id = idParam ? +idParam : null;
     if (id !== null) {
       this.item = this.inventoryService.getItemById(id);
+      this.itemForm.patchValue({ name: this.item?.name });
+      this.itemForm.patchValue({ price: this.item?.price });
+      this.itemForm.patchValue({ available: this.item?.available });
+      this.itemForm.patchValue({ category: this.item?.category });
+      this.itemForm.patchValue({ description: this.item?.description });
     }
   }
 
-  addImages(event: any): void {
-    const files = Array.from(event.target.files || []);
-    if (files.length > 0) {
-      files.forEach((file: any) => {
-        this.images.push(file.name);
-      });
+  onImageChange(): void {
+    this.images = [];
+    this.files = this.fileInput.nativeElement.files;
+    if (this.files) {
+      for (let i = 0; i < this.files.length; i++) {
+        const file = this.files[i];
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.images.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
-  }
-
-  /**
-   * Basic sanitization that removes any HTML or script tags.
-   * In production, consider using a robust library (e.g. DOMPurify) or server-side sanitization.
-   */
-  sanitizeInput(input: string): string {
-    return input
-      .replace(/<script.*?>.*?<\/script>/gi, '')
-      .replace(/<.*?>/g, '');
   }
 
   onSubmit(): void {
     if (this.itemForm.valid) {
-      const rawData = this.itemForm.value;
-      const sanitizedData = {
-        name: this.sanitizeInput(rawData.name),
-        category: this.sanitizeInput(rawData.category),
-        description: this.sanitizeInput(rawData.description),
-      };
-      console.log('Sanitized contact form submission', sanitizedData);
-      this.router.navigate(['/inventory']);
+      this.itemForm.patchValue({ images: this.files });
     }
   }
 }

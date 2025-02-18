@@ -1,19 +1,7 @@
 <section class="inventory">
-  <!-- <div class="form-group sorting">
-    <select id="sort-select" (change)="onSortChange($event)">
-      <option value="priceAsc" [selected]="selectedSort === 'priceAsc'">
-        Price: Low to High
-      </option>
-      <option value="priceDesc" [selected]="selectedSort === 'priceDesc'">
-        Price: High to Low
-      </option>
-      <option value="availability" [selected]="selectedSort === 'availability'">
-        Availability: In Stock Only
-      </option>
-    </select>
-    <label for="sort-select">Sort by</label>
-  </div> -->
-
+  <div class="form-row">
+    <button (click)="onNewItem()">New Item</button>
+  </div>
   <ng-container *ngFor="let category of categories">
     <h2 class="category">{{ category }}</h2>
     <div

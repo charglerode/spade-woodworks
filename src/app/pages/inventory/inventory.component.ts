@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { InventoryService } from '../../services/inventory.service';
 
@@ -14,7 +14,10 @@ export class InventoryComponent {
   categories = ['Wood Care', 'Crafts', 'Furniture'];
   inventory: Product[] = [];
 
-  constructor(private inventoryService: InventoryService) {
+  constructor(
+    private inventoryService: InventoryService,
+    private router: Router,
+  ) {
     this.inventory = this.inventoryService.getInventory();
   }
 
@@ -30,5 +33,9 @@ export class InventoryComponent {
       }
     });
     return groups;
+  }
+
+  onNewItem(): void {
+    this.router.navigateByUrl('/inventory/new');
   }
 }

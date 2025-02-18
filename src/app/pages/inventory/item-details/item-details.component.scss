@@ -10,3 +10,12 @@
 .available input {
   order: 2;
 }
+
+.images {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

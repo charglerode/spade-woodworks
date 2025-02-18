@@ -1,13 +1,17 @@
 <section class="inventory-item">
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <div class="images">
+      <img *ngFor="let image of images" [src]="image" height="96" />
+    </div>
     <div class="form-group">
       <input
+        #fileInput
         type="file"
         id="images"
         formArrayName="images"
         multiple
-        accept=".png, .jpg"
-        (change)="addImages($event)"
+        accept="image/*"
+        (change)="onImageChange()"
       />
     </div>
     <div class="form-row">
@@ -92,14 +96,8 @@
         <option value="" selected>Choose One:</option>
         <option value="Wood Care">Wood Care</option>
         <option value="Crafts">Crafts</option>
-        <option value="Furnitiure">Furniture</option>
+        <option value="Furniture">Furniture</option>
       </select>
-      <!-- <input
-        type="text"
-        id="category"
-        formControlName="category"
-        placeholder="Category"
-      /> -->
       <label for="category">Category</label>
       <div
         class="error"
@@ -123,12 +121,6 @@
         placeholder="Description"
         rows="7"
       ></textarea>
-      <!-- <input
-        type="text"
-        id="description"
-        formControlName="description"
-        placeholder="Description"
-      /> -->
       <label for="description">Description</label>
       <div
         class="error"
