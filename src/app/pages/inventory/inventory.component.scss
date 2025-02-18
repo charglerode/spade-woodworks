@@ -1,0 +1,18 @@
+.inventory {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category {
+  padding-top: 20px;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+}

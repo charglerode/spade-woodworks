@@ -1,0 +1,150 @@
+<section class="inventory-item">
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <input
+        type="file"
+        id="images"
+        formArrayName="images"
+        multiple
+        accept=".png, .jpg"
+        (change)="addImages($event)"
+      />
+    </div>
+    <div class="form-row">
+      <div class="form-group input-lg">
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Name"
+        />
+        <label for="name">Name</label>
+        <div
+          class="error"
+          *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched"
+        >
+          <small *ngIf="itemForm.get('name')?.errors?.['required']">
+            Name is required.
+          </small>
+          <small *ngIf="itemForm.get('name')?.errors?.['pattern']">
+            Name must have at least 2 letters and can only include letters,
+            hyphens, and apostrophes.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group input-md">
+        <input
+          type="number"
+          id="price"
+          formControlName="price"
+          placeholder="Price"
+        />
+        <label for="price">Price</label>
+        <div
+          class="error"
+          *ngIf="
+            itemForm.get('price')?.invalid && itemForm.get('price')?.touched
+          "
+        >
+          <small *ngIf="itemForm.get('price')?.errors?.['required']">
+            Price is required.
+          </small>
+          <small *ngIf="itemForm.get('price')?.errors?.['pattern']">
+            Price must be defined
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group input-sm available">
+        <input
+          type="checkbox"
+          id="available"
+          formControlName="available"
+          placeholder="Available"
+        />
+        <label class="label" type="checkbox" for="available">Available</label>
+        <div
+          class="error"
+          *ngIf="
+            itemForm.get('available')?.invalid &&
+            itemForm.get('available')?.touched
+          "
+        >
+          <small *ngIf="itemForm.get('available')?.errors?.['required']">
+            Price is required.
+          </small>
+          <small *ngIf="itemForm.get('available')?.errors?.['pattern']">
+            Price must be defined
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <select
+        id="category"
+        required
+        formControlName="category"
+        name="category"
+        placeholder="Category"
+      >
+        <option value="" selected>Choose One:</option>
+        <option value="Wood Care">Wood Care</option>
+        <option value="Crafts">Crafts</option>
+        <option value="Furnitiure">Furniture</option>
+      </select>
+      <!-- <input
+        type="text"
+        id="category"
+        formControlName="category"
+        placeholder="Category"
+      /> -->
+      <label for="category">Category</label>
+      <div
+        class="error"
+        *ngIf="
+          itemForm.get('category')?.invalid && itemForm.get('category')?.touched
+        "
+      >
+        <small *ngIf="itemForm.get('category')?.errors?.['required']">
+          Category is required.
+        </small>
+        <small *ngIf="itemForm.get('category')?.errors?.['pattern']">
+          Category must be defined
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <textarea
+        id="description"
+        formControlName="description"
+        placeholder="Description"
+        rows="7"
+      ></textarea>
+      <!-- <input
+        type="text"
+        id="description"
+        formControlName="description"
+        placeholder="Description"
+      /> -->
+      <label for="description">Description</label>
+      <div
+        class="error"
+        *ngIf="
+          itemForm.get('description')?.invalid &&
+          itemForm.get('description')?.touched
+        "
+      >
+        <small *ngIf="itemForm.get('description')?.errors?.['required']">
+          Description is required.
+        </small>
+        <small *ngIf="itemForm.get('description')?.errors?.['pattern']">
+          Description must be defined
+        </small>
+      </div>
+    </div>
+    <button type="submit" [disabled]="itemForm.invalid">Add Item</button>
+  </form>
+</section>

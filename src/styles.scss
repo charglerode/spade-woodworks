@@ -99,7 +99,38 @@ form {
   margin-top: 10px;
 }
 
-input,
+.form-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.form-col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.input-lg {
+  width: 60%;
+}
+
+.input-md {
+  width: 25%;
+}
+
+.input-sm {
+  width: 15%;
+}
+
+input:not([type='checkbox']),
 textarea,
 select {
   font-family: inherit;
@@ -128,8 +159,8 @@ select:placeholder-shown ~ label {
   top: 20px;
 }
 
-label,
-input:focus ~ label,
+label:not([type='checkbox']),
+input:focus ~ label:not([type='checkbox']),
 textarea:focus ~ label,
 select:focus ~ label {
   position: absolute;
@@ -151,4 +182,73 @@ textarea:focus,
 select:focus {
   padding-bottom: 6px;
   border-bottom: 2px solid var(--secondary-color);
+}
+
+input[type='file']::file-selector-button {
+  font-family: 'Anaheim', sans-serif;
+  font-size: 14px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--secondary-light);
+  }
+  &:disabled {
+    background-color: var(--primary-light);
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: var(--secondary-light);
+  }
+}
+
+// PRODUCTS / INVENTORY
+.category {
+  padding-top: 20px;
+}
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+}
+
+// PRODUCT CARD
+.card {
+  background-color: var(--primary-light);
+  padding: 0;
+  border-radius: 5px;
+  width: 300px;
+  height: 350px;
+  box-sizing: border-box;
+  overflow: hidden;
+  &:hover {
+    cursor: pointer;
+  }
+  h3 {
+    margin-top: 0;
+  }
+  .content {
+    height: 33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+  }
+  .price,
+  .unavailable {
+    text-align: center;
+    background-color: var(--primary-light);
+  }
+  .price {
+    color: var(--accent-light);
+    font-weight: bolder;
+    font-size: x-large;
+  }
 }

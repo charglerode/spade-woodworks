@@ -1,6 +1,5 @@
-<section class="products">
-  <!-- <h1>Our Products</h1> -->
-  <div class="form-group sorting">
+<section class="inventory">
+  <!-- <div class="form-group sorting">
     <select id="sort-select" (change)="onSortChange($event)">
       <option value="priceAsc" [selected]="selectedSort === 'priceAsc'">
         Price: Low to High
@@ -13,12 +12,12 @@
       </option>
     </select>
     <label for="sort-select">Sort by</label>
-  </div>
+  </div> -->
 
   <ng-container *ngFor="let category of categories">
     <h2 class="category">{{ category }}</h2>
     <div
-      class="item-list"
+      class="list"
       *ngIf="
         groupedProducts[category] && groupedProducts[category].length > 0;
         else noProducts
@@ -26,16 +25,16 @@
     >
       <div
         class="card"
-        *ngFor="let product of groupedProducts[category]"
-        [routerLink]="['/products', product.id]"
+        *ngFor="let item of inventory"
+        [routerLink]="['/inventory/', item.id]"
       >
         <div class="header">
-          <img [src]="product.images[0]" width="300" />
+          <img [src]="item.images[0]" width="300" />
         </div>
         <div class="content">
-          <h3>{{ product.name }}</h3>
-          <div *ngIf="product.available; else outOfStock">
-            <p class="price">${{ product.price }}</p>
+          <h3>{{ item.name }}</h3>
+          <div *ngIf="item.available; else outOfStock">
+            <p class="price">${{ item.price }}</p>
           </div>
         </div>
         <ng-template #outOfStock
@@ -44,7 +43,7 @@
       </div>
     </div>
     <ng-template #noProducts>
-      <p class="no-products">No Products Available</p>
+      <p class="no-products">No Items Available</p>
     </ng-template>
   </ng-container>
 </section>
