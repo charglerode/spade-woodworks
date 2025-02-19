@@ -7,12 +7,22 @@ const router = express.Router();
 router
   .route('/')
   .get(auth.protect, controller.getAllProducts)
-  .post(auth.protect, controller.createProduct);
+  .post(
+    auth.protect,
+    controller.upload,
+    controller.resize,
+    controller.createProduct,
+  );
 
 router
   .route('/:id')
   .get(auth.protect, controller.getProduct)
-  .patch(auth.protect, controller.updateProduct)
+  .patch(
+    auth.protect,
+    controller.upload,
+    controller.resize,
+    controller.updateProduct,
+  )
   .delete(auth.protect, controller.deleteProduct);
 
 module.exports = router;
