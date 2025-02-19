@@ -15,18 +15,24 @@ const upload = multer({
   },
 });
 
-exports.upload = upload.single('images');
+exports.upload = upload.array('images');
 
-exports.resize = (req, res, next) => {
-  if (!req.file) return next();
-  req.file.filename = `${req.file.originalname}-${Date.now()}`;
-  sharp(req.file.buffer)
-    .resize(800, 600)
-    .toFormat('jpeg')
-    .jpeg({ quality: 90 })
-    .toFile(`../public/img/uploads/${req.file.filename}.jpeg`);
+exports.resize = catchAsync(async (req, res, next) => {
+  if (!req.files) return next();
+  req.body.images = [];
+  await Promise.all(
+    req.files.map(async (file, i) => {
+      const filename = `${file.originalname.split('.')[0]}-${Date.now()}-${i + 1}.jpeg`;
+      await sharp(file.buffer)
+        .resize(800, 600)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`../public/img/uploads/${filename}`);
+      req.body.images.push(filename);
+    }),
+  );
   next();
-};
+});
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
   const products = await Product.find();
