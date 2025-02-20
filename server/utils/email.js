@@ -1,21 +1,47 @@
 const nodemailer = require('nodemailer');
+const htmlToText = require('html-to-text');
+const pug = require('pug');
 
-const sendEmail = async (options) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-  await transporter.sendMail({
-    from: 'DEV Reset <sandbox.smtp.mailtrap.io>',
-    to: options.email,
-    subject: options.subject,
-    text: options.message,
-  });
+module.exports = class Email {
+  constructor(user, url) {
+    this.to = user.email;
+    this.url = url;
+    this.from = `DEV Reset <${process.env.EMAIL_FROM}>`;
+  }
+
+  newTransport() {
+    if (process.env.NODE_ENV === 'production') {
+      // TODO
+      return 1;
+    } else {
+      return nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: false,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+    }
+  }
+
+  async send(template, subject) {
+    const html = pug.renderFile(`${__dirname}/../views/${template}.pug`, {
+      url: this.url,
+      subject,
+    });
+
+    await this.newTransport().sendMail({
+      from: this.from,
+      to: this.to,
+      subject,
+      html,
+      text: htmlToText.htmlToText(html),
+    });
+  }
+
+  async sendResetPassword() {
+    await this.send('reset', 'Reset your password');
+  }
 };
-
-module.exports = sendEmail;

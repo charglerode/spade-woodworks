@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -17,6 +18,10 @@ const app = express();
 // CORS, TURN OFF IN PRODUCTION
 app.use(cors());
 app.options('*', cors());
+
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'pug');
 
 app.use(helmet());
 
