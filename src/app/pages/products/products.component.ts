@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
@@ -11,13 +11,18 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   categories = ['Wood Care', 'Crafts', 'Furniture'];
   selectedSort: string = 'priceAsc';
   products: Product[] = [];
 
-  constructor(private productService: ProductService) {
-    this.products = this.productService.getProducts();
+  constructor(private service: ProductService) {}
+
+  ngOnInit(): void {
+    this.service.getProducts().subscribe((res) => {
+      console.log(res.data.products);
+      this.products = res.data.products;
+    });
   }
 
   onSortChange(event: Event): void {

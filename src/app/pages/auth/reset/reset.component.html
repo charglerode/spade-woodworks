@@ -1,0 +1,47 @@
+<section>
+  <div class="form-row" *ngIf="message.length > 0">
+    <p>{{ message }}</p>
+  </div>
+  <form
+    *ngIf="message.length === 0"
+    [formGroup]="resetForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="form-row" *ngIf="error.length > 0">
+      <p class="error">{{ error }}</p>
+    </div>
+    <div class="form-group">
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        placeholder="Password"
+      />
+      <label for="password">Password</label>
+      <div
+        class="error"
+        *ngIf="
+          resetForm.get('password')?.invalid &&
+          resetForm.get('password')?.touched
+        "
+      >
+        <small *ngIf="resetForm.get('password')?.errors?.['minlength']">
+          Password must be at least 8 characters long.
+        </small>
+      </div>
+    </div>
+    <div class="form-group">
+      <input
+        type="password"
+        id="confirm"
+        formControlName="confirm"
+        placeholder="Confirm Password"
+      />
+      <label for="confirm">Confirm Password</label>
+      <div class="error">
+        <small *ngIf="resetForm.invalid">Passwords must match.</small>
+      </div>
+    </div>
+    <button type="submit" [disabled]="resetForm.invalid">Accept</button>
+  </form>
+</section>

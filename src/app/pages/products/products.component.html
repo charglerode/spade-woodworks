@@ -27,7 +27,7 @@
       <div
         class="card"
         *ngFor="let product of groupedProducts[category]"
-        [routerLink]="['/products', product.id]"
+        [routerLink]="['/products', product._id]"
       >
         <div class="header">
           <img [src]="product.images[0]" width="300" />

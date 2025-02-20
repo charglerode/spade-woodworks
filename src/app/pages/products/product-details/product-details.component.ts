@@ -18,14 +18,15 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService,
+    private service: ProductService,
   ) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    const id = idParam ? +idParam : null;
+    const id: string | null = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
-      this.product = this.productService.getProductById(id);
+      this.service.getProductById(id).subscribe((res) => {
+        this.product = res.data.product;
+      });
     }
   }
 }

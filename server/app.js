@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cors = require('cors');
 const AppError = require('./utils/error');
 const errorHandler = require('./controllers/error.controller');
 const products = require('./routes/product.route');
@@ -12,6 +13,10 @@ const users = require('./routes/user.route');
 const inventory = require('./routes/inventory.route');
 
 const app = express();
+
+// CORS, TURN OFF IN PRODUCTION
+app.use(cors());
+app.options('*', cors());
 
 app.use(helmet());
 

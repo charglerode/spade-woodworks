@@ -28,7 +28,7 @@ export class ItemDetailsComponent {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private inventoryService: InventoryService,
+    private service: InventoryService,
   ) {
     this.itemForm = this.fb.group({
       name: [
@@ -44,15 +44,17 @@ export class ItemDetailsComponent {
   }
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    const id = idParam ? +idParam : null;
+    const id: string | null = this.route.snapshot.paramMap.get('id');
+    // const id = idParam ? +idParam : null;
     if (id !== null) {
-      this.item = this.inventoryService.getItemById(id);
-      this.itemForm.patchValue({ name: this.item?.name });
-      this.itemForm.patchValue({ price: this.item?.price });
-      this.itemForm.patchValue({ available: this.item?.available });
-      this.itemForm.patchValue({ category: this.item?.category });
-      this.itemForm.patchValue({ description: this.item?.description });
+      this.service.getItemById(id).subscribe((res) => {
+        this.item = res.data.product;
+        this.itemForm.patchValue({ name: this.item?.name });
+        this.itemForm.patchValue({ price: this.item?.price });
+        this.itemForm.patchValue({ available: this.item?.available });
+        this.itemForm.patchValue({ category: this.item?.category });
+        this.itemForm.patchValue({ description: this.item?.description });
+      });
     }
   }
 

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { InventoryService } from '../../services/inventory.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-inventory',
@@ -10,15 +11,20 @@ import { InventoryService } from '../../services/inventory.service';
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.scss',
 })
-export class InventoryComponent {
+export class InventoryComponent implements OnInit {
   categories = ['Wood Care', 'Crafts', 'Furniture'];
   inventory: Product[] = [];
 
   constructor(
-    private inventoryService: InventoryService,
+    private service: InventoryService,
+    private authService: AuthService,
     private router: Router,
-  ) {
-    this.inventory = this.inventoryService.getInventory();
+  ) {}
+
+  ngOnInit(): void {
+    this.service.getInventory().subscribe((res) => {
+      this.inventory = res.data.products;
+    });
   }
 
   get groupedProducts(): { [key: string]: Product[] } {
@@ -37,5 +43,9 @@ export class InventoryComponent {
 
   onNewItem(): void {
     this.router.navigateByUrl('/inventory/new');
+  }
+
+  onLogout(): void {
+    this.authService.logout();
   }
 }
