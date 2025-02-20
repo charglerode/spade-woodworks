@@ -27,7 +27,7 @@ export class InventoryComponent implements OnInit {
     });
   }
 
-  get groupedProducts(): { [key: string]: Product[] } {
+  get groupedItems(): { [key: string]: Product[] } {
     const groups: { [key: string]: Product[] } = {
       'Wood Care': [],
       Crafts: [],

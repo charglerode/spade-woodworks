@@ -6,15 +6,15 @@
   <ng-container *ngFor="let category of categories">
     <h2 class="category">{{ category }}</h2>
     <div
-      class="list"
+      class="item-list"
       *ngIf="
-        groupedProducts[category] && groupedProducts[category].length > 0;
+        groupedItems[category] && groupedItems[category].length > 0;
         else noProducts
       "
     >
       <div
         class="card"
-        *ngFor="let item of inventory"
+        *ngFor="let item of groupedItems[category]"
         [routerLink]="['/inventory/', item._id]"
       >
         <div class="header">
