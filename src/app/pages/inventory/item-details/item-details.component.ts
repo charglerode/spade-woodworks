@@ -23,6 +23,7 @@ export class ItemDetailsComponent {
   item: Product | undefined;
   images: any[] = [];
   files!: FileList | null;
+  error = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -39,13 +40,12 @@ export class ItemDetailsComponent {
       available: false,
       category: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      images: null,
+      images: this.fb.array([]),
     });
   }
 
   ngOnInit(): void {
     const id: string | null = this.route.snapshot.paramMap.get('id');
-    // const id = idParam ? +idParam : null;
     if (id !== null) {
       this.service.getItemById(id).subscribe((res) => {
         this.item = res.data.product;
@@ -74,8 +74,45 @@ export class ItemDetailsComponent {
   }
 
   onSubmit(): void {
+    let formData: any = new FormData();
+    let imgs = [];
     if (this.itemForm.valid) {
-      this.itemForm.patchValue({ images: this.files });
+      Object.keys(this.itemForm.controls).forEach((formControlName) => {
+        formData.append(
+          formControlName,
+          this.itemForm.get(formControlName)?.value,
+        );
+      });
+      for (let i = 0; i < this.files?.length!; i++) {
+        formData.append('images', this.files![i]);
+      }
+    }
+    if (this.item) {
+      this.service.updateItem(this.item?._id, formData).subscribe({
+        next: (res) => {
+          if (res.status === 'success') {
+            this.router.navigate(['/inventory']);
+          }
+        },
+        error: (err) => {
+          if (err.status === 404) {
+            this.error = `No product found with id: ${this.item?._id}`;
+          } else {
+            this.error = 'An unknown error occurred. Please try again later.';
+          }
+        },
+      });
+    } else {
+      this.service.addItem(formData).subscribe({
+        next: (res) => {
+          if (res.status === 'success') {
+            this.router.navigate(['/inventory']);
+          }
+        },
+        error: (err) => {
+          this.error = `An unknown error occurred. Please try again later. ${err}`;
+        },
+      });
     }
   }
 }

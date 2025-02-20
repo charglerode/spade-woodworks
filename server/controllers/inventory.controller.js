@@ -15,9 +15,9 @@ const upload = multer({
   },
 });
 
-exports.upload = upload.array('images');
+exports.uploadImages = upload.array('images');
 
-exports.resize = catchAsync(async (req, res, next) => {
+exports.resizeImages = catchAsync(async (req, res, next) => {
   if (!req.files) return next();
   req.body.images = [];
   await Promise.all(
@@ -27,7 +27,7 @@ exports.resize = catchAsync(async (req, res, next) => {
         .resize(800, 600)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
-        .toFile(`../public/img/uploads/${filename}`);
+        .toFile(`./img/uploads/${filename}`);
       req.body.images.push(filename);
     }),
   );

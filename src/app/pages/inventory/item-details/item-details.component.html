@@ -1,7 +1,15 @@
 <section class="inventory-item">
-  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+  <form
+    [formGroup]="itemForm"
+    enctype="multipart/form-data"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="images">
-      <img *ngFor="let image of images" [src]="image" height="96" />
+      <img
+        *ngFor="let image of images"
+        src="./img/uploads/{{ image }}"
+        height="96"
+      />
     </div>
     <div class="form-group">
       <input
@@ -137,6 +145,11 @@
         </small>
       </div>
     </div>
-    <button type="submit" [disabled]="itemForm.invalid">Add Item</button>
+    <button *ngIf="!item" type="submit" [disabled]="itemForm.invalid">
+      Add Item
+    </button>
+    <button *ngIf="item" type="submit" [disabled]="itemForm.invalid">
+      Update Item
+    </button>
   </form>
 </section>

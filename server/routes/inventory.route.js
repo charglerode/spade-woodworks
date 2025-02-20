@@ -9,8 +9,8 @@ router
   .get(auth.protect, controller.getAllProducts)
   .post(
     auth.protect,
-    controller.upload,
-    controller.resize,
+    controller.uploadImages,
+    controller.resizeImages,
     controller.createProduct,
   );
 
@@ -19,8 +19,8 @@ router
   .get(auth.protect, controller.getProduct)
   .patch(
     auth.protect,
-    controller.upload,
-    controller.resize,
+    controller.uploadImages,
+    controller.resizeImages,
     controller.updateProduct,
   )
   .delete(auth.protect, controller.deleteProduct);
