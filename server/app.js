@@ -13,6 +13,7 @@ const products = require('./routes/product.route');
 const users = require('./routes/user.route');
 const inventory = require('./routes/inventory.route');
 const contact = require('./routes/contact.route');
+const quotes = require('./routes/quotes.route');
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use('/api/v1/products', products);
 app.use('/api/v1/users', users);
 app.use('/api/v1/inventory', inventory);
 app.use('/api/v1/contact', contact);
+app.use('/api/v1/quotes', quotes);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl}`, 404));

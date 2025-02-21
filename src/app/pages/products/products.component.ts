@@ -15,23 +15,26 @@ export class ProductsComponent implements OnInit {
   categories = ['Wood Care', 'Crafts', 'Furniture'];
   selectedSort: string = 'priceAsc';
   products: Product[] = [];
+  error = '';
 
   constructor(private service: ProductService) {}
 
   ngOnInit(): void {
-    this.service.getProducts().subscribe((res) => {
-      console.log(res.data.products);
-      this.products = res.data.products;
+    this.service.getProducts().subscribe({
+      next: (res) => {
+        if (res.status === 'success') {
+          this.products = res.data.products;
+        }
+      },
+      error: (err) => {
+        this.error = 'An unknown error occurred. Please try again later.';
+      },
     });
   }
 
   onSortChange(event: Event): void {
     const sortValue = (event.target as HTMLSelectElement).value;
     this.selectedSort = sortValue;
-  }
-
-  productSelected(id: string): void {
-    alert(`Product ${id} selected`);
   }
 
   get sortedProducts(): Product[] {

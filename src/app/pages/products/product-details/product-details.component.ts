@@ -15,6 +15,7 @@ import { SlideshowComponent } from '../../../components/slideshow/slideshow.comp
 })
 export class ProductDetailsComponent implements OnInit {
   product: Product | undefined;
+  error = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -24,8 +25,15 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     const id: string | null = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
-      this.service.getProductById(id).subscribe((res) => {
-        this.product = res.data.product;
+      this.service.getProductById(id).subscribe({
+        next: (res) => {
+          if (res.status === 'success') {
+            this.product = res.data.product;
+          }
+        },
+        error: (err) => {
+          this.error = 'An unknown error occurred. Please try again later.';
+        },
       });
     }
   }
