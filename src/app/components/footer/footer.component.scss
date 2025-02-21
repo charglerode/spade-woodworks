@@ -1,4 +1,4 @@
-footer {
+.footer {
   flex-shrink: 0;
   height: 130px;
   background-color: var(--primary-color);
@@ -49,4 +49,22 @@ footer {
 
 .legal {
   align-items: start;
+}
+
+.quote {
+  width: 100vw;
+  padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url(../../../../public/img/footer-quote.jpg) center center
+    no-repeat;
+  background-size: cover;
+  p {
+    font-size: 24px;
+    color: var(--text-on-dark);
+    background-color: transparent;
+    font-weight: 900;
+    text-shadow: 2px 2px 2px black;
+  }
 }

@@ -17,6 +17,7 @@
   --warn-light: color-mix(in oklab, var(--warn-color), white 20%);
 
   --background-dark: color-mix(in oklab, var(--primary-color), black 20%);
+  --background-mid: color-mix(in oklab, var(--primary-color), white 60%);
   --background-light: color-mix(in oklab, var(--primary-color), white 80%);
 
   --text-on-light: #333;
@@ -52,7 +53,7 @@ h6 {
 section {
   width: 70%;
   max-width: 940px;
-  margin: 50px auto;
+  margin: 0 auto;
 }
 
 // BUTTONS
