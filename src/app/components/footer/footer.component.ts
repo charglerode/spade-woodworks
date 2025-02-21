@@ -16,10 +16,10 @@ export class FooterComponent implements OnDestroy {
   interval: any;
 
   constructor(private service: QuoteService) {
-    this.getQuote();
+    this.quote = this.service.getQuote();
     this.interval = setInterval(
       () => {
-        this.getQuote();
+        this.quote = this.service.getQuote();
       },
       1000 * 60 * 5,
     );
@@ -27,22 +27,5 @@ export class FooterComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
-  }
-
-  getQuote(): void {
-    this.service.getQuote().subscribe({
-      next: (res) => {
-        if (res.status === 'success') {
-          this.quote = res.data.quote[0];
-          console.log(this.quote);
-        }
-      },
-      error: (err) => {
-        this.quote = {
-          line: 'Give me six hours to chop down a tree and I will spend the first four sharpening the axe.',
-          attribution: 'Abraham Lincoln',
-        };
-      },
-    });
   }
 }
