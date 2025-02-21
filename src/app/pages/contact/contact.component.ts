@@ -8,6 +8,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { ContactService } from '../../services/contact.service';
 
 @Component({
   selector: 'app-contact-page',
@@ -18,19 +19,18 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class ContactComponent {
   contactForm: FormGroup;
+  message = '';
+  error = '';
 
   constructor(
+    private service: ContactService,
     private fb: FormBuilder,
     private router: Router,
   ) {
     this.contactForm = this.fb.group({
       name: [
         '',
-        [
-          Validators.required,
-          // Must be at least 2 characters; allows letters (upper/lower), hyphens, and apostrophes
-          Validators.pattern(/^[A-Za-z\s'-]{2,}$/),
-        ],
+        [Validators.required, Validators.pattern(/^[A-Za-z\s'-]{2,}$/)],
       ],
       email: ['', [Validators.required, Validators.email]],
       reason: ['', [Validators.required, Validators.minLength(1)]],
@@ -38,28 +38,23 @@ export class ContactComponent {
     });
   }
 
-  /**
-   * Basic sanitization that removes any HTML or script tags.
-   * In production, consider using a robust library (e.g. DOMPurify) or server-side sanitization.
-   */
-  sanitizeInput(input: string): string {
-    return input
-      .replace(/<script.*?>.*?<\/script>/gi, '')
-      .replace(/<.*?>/g, '');
-  }
-
   onSubmit(): void {
     if (this.contactForm.valid) {
-      const rawData = this.contactForm.value;
-      const sanitizedData = {
-        name: this.sanitizeInput(rawData.name),
-        email: this.sanitizeInput(rawData.email),
-        message: this.sanitizeInput(rawData.message),
-      };
-      console.log('Sanitized contact form submission', sanitizedData);
-      alert('Thank you for contacting us!');
-      // this.contactForm.reset();
-      this.router.navigate(['']);
+      this.service.sendMessage(this.contactForm.value).subscribe({
+        next: (res) => {
+          if (res.status === 'success') {
+            this.message =
+              'Thank you for reaching out! We will address your inquiry and get back to as soon as possible.';
+            const timeout = setTimeout(() => {
+              clearTimeout(timeout);
+              this.router.navigate(['/']);
+            }, 5000);
+          }
+        },
+        error: (err) => {
+          this.error = 'An unknown error occurred. Please try again later.';
+        },
+      });
     }
   }
 }

@@ -3,8 +3,8 @@ const htmlToText = require('html-to-text');
 const pug = require('pug');
 
 module.exports = class Email {
-  constructor(user, url) {
-    this.to = user.email;
+  constructor(email, url) {
+    this.to = email;
     this.url = url;
     this.from = `DEV Reset <${process.env.EMAIL_FROM}>`;
   }
@@ -43,5 +43,22 @@ module.exports = class Email {
 
   async sendResetPassword() {
     await this.send('reset', 'Reset your password');
+  }
+
+  async sendContactMessage(name, email, reason, message) {
+    const html = pug.renderFile(`${__dirname}/../views/contact.pug`, {
+      name,
+      email,
+      reason,
+      message,
+    });
+
+    await this.newTransport().sendMail({
+      from: this.from,
+      to: 'contact@spadewoodworks.com',
+      subject: `Contact Form: ${reason}`,
+      html,
+      text: htmlToText.htmlToText(html),
+    });
   }
 };

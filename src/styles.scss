@@ -92,6 +92,12 @@ form {
   }
 }
 
+.error {
+  color: var(--warn-color);
+  font-size: 0.85em;
+  margin-top: 5px;
+}
+
 .form-group {
   position: relative;
   width: 100%;

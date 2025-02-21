@@ -1,11 +1,16 @@
 <section>
-  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-    <!-- <h1>Contact Us</h1> -->
-    <p>
-      Let us know if you have any questions, technical issues, need support for
-      products you've already purchased, want a quote on a custom piece of
-      furniture, or anything else. We're anxious to hear from you.
-    </p>
+  <p *ngIf="message.length === 0 && error.length === 0" class="feedback">
+    Let us know if you have any questions, technical issues, need support for
+    products you've already purchased, want a quote on a custom piece of
+    furniture, or anything else. We're anxious to hear from you.
+  </p>
+  <p *ngIf="error.length > 0" class="feedback error">{{ error }}</p>
+  <p *ngIf="message.length > 0" class="feedback">{{ message }}</p>
+  <form
+    [formGroup]="contactForm"
+    *ngIf="message.length === 0 && error.length === 0"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="form-group">
       <input type="text" id="name" formControlName="name" placeholder="Name" />
       <label for="name">Name</label>
@@ -55,11 +60,11 @@
         placeholder="Reason"
       >
         <option value="" selected>Choose One:</option>
-        <option value="quote">Quote</option>
-        <option value="products">Product Inquiry</option>
-        <option value="support">Customer Support</option>
-        <option value="technical">Technical Issue</option>
-        <option value="other">Other</option>
+        <option value="Quote">Quote</option>
+        <option value="Products">Product Inquiry</option>
+        <option value="Support">Customer Support</option>
+        <option value="Technical">Technical Issue</option>
+        <option value="Other">Other</option>
       </select>
       <label for="email">Reason</label>
       <div class="error" *ngIf="contactForm.get('reason')?.invalid">
