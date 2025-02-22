@@ -31,3 +31,18 @@ exports.getProduct = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getFeaturedProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.find().where('featured').equals(true);
+
+  if (!product[0]) {
+    return next(new AppError(`No featured product`), 404);
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      product: product[0],
+    },
+  });
+});

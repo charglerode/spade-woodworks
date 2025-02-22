@@ -92,6 +92,27 @@
           </small>
         </div>
       </div>
+
+      <div class="form-group input-sm featured">
+        <input
+          type="checkbox"
+          id="featured"
+          formControlName="featured"
+          placeholder="Featured"
+        />
+        <label class="label" type="checkbox" for="featured">Featured</label>
+        <div
+          class="error"
+          *ngIf="
+            itemForm.get('available')?.invalid &&
+            itemForm.get('available')?.touched
+          "
+        >
+          <small *ngIf="itemForm.get('featured')?.errors?.['pattern']">
+            Price must be defined
+          </small>
+        </div>
+      </div>
     </div>
 
     <div class="form-group">

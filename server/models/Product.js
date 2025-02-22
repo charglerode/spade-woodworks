@@ -29,6 +29,10 @@ const product = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  featured: {
+    type: Boolean,
+    default: false,
+  },
   images: [String],
 });
 

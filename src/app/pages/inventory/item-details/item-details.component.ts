@@ -41,6 +41,7 @@ export class ItemDetailsComponent {
       category: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       images: this.fb.array([]),
+      featured: false,
     });
   }
 
@@ -54,6 +55,7 @@ export class ItemDetailsComponent {
         this.itemForm.patchValue({ available: this.item?.available });
         this.itemForm.patchValue({ category: this.item?.category });
         this.itemForm.patchValue({ description: this.item?.description });
+        this.itemForm.patchValue({ featured: this.item?.featured });
       });
     }
   }

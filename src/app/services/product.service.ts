@@ -26,4 +26,14 @@ export class ProductService {
       }),
     );
   }
+
+  getFeaturedProduct(): Observable<any> {
+    return this.http
+      .get<Product>(`http://127.0.0.1:8000${this.api}featured`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(() => error);
+        }),
+      );
+  }
 }

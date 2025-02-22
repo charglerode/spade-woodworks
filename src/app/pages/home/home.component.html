@@ -34,13 +34,11 @@
       </p>
     </div>
   </div>
-  <div class="product">
+  <div *ngIf="product" class="product">
     <div class="row">
-      <img src="https://placehold.co/300x200" />
+      <img src="./img/uploads/{{ product.images[0] }}" />
       <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit tempore
-        deleniti quas impedit ipsum culpa iste quo, et amet, vitae aliquid
-        nesciunt doloribus est, temporibus animi dolorem expedita id minus!
+        {{ product.description }}
       </p>
     </div>
   </div>
