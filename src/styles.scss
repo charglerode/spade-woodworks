@@ -2,7 +2,7 @@
 :root {
   --primary-color: #262022;
   --primary-dark: color-mix(in oklab, var(--primary-color), black 10%);
-  --primary-light: color-mix(in oklab, var(--primary-color), white 50%);
+  --primary-light: color-mix(in oklab, var(--primary-color), white 60%);
 
   --secondary-color: #ce7115;
   --secondary-dark: color-mix(in oklab, var(--secondary-color), black 20%);
@@ -17,7 +17,6 @@
   --warn-light: color-mix(in oklab, var(--warn-color), white 20%);
 
   --background-dark: color-mix(in oklab, var(--primary-color), black 20%);
-  --background-mid: color-mix(in oklab, var(--primary-color), white 60%);
   --background-light: color-mix(in oklab, var(--primary-color), white 80%);
 
   --text-on-light: #333;
@@ -52,7 +51,7 @@ h6 {
 
 section {
   width: 70%;
-  max-width: 940px;
+  max-width: 960px;
   margin: 50px auto 100px auto;
 }
 

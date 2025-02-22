@@ -1,0 +1,39 @@
+.gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+}
+
+.block {
+  width: 100%;
+  background-color: var(--primary-light);
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  gap: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  &:link,
+  &:hover,
+  &:active,
+  &:visited {
+    color: var(--text-on-light);
+    text-decoration: none;
+  }
+  .description {
+    padding: 20px;
+    background-color: transparent;
+  }
+  p {
+    background-color: transparent;
+  }
+}
+
+.block:nth-child(even) {
+  flex-direction: row-reverse;
+  justify-content: right;
+  text-align: right;
+}

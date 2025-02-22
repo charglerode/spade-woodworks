@@ -1,1 +1,13 @@
-<p>gallery works!</p>
+<section class="gallery">
+  <a
+    *ngFor="let piece of gallery"
+    [routerLink]="['/gallery/', piece._id]"
+    class="block"
+  >
+    <img src="./img/uploads/{{ piece.cover }}" width="450" height="300" />
+    <div class="description">
+      <h3>{{ piece.name }}</h3>
+      <p>{{ piece.teaser }}</p>
+    </div>
+  </a>
+</section>

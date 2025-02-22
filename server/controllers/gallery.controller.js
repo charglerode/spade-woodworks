@@ -1,4 +1,4 @@
-const Product = require('../models/Product');
+const Gallery = require('../models/Gallery');
 const multer = require('multer');
 const sharp = require('sharp');
 const catchAsync = require('../utils/catch');
@@ -15,13 +15,24 @@ const upload = multer({
   },
 });
 
-exports.uploadImages = upload.array('images');
+exports.uploadImages = upload.fields([
+  { name: 'cover', maxCount: 1 },
+  { name: 'images' },
+]);
 
 exports.resizeImages = catchAsync(async (req, res, next) => {
-  if (!req.files) return next();
+  if (!req.files.cover || !req.files.images) return next();
+
+  req.body.cover = `${req.files.cover[0].originalname.split('.')[0]}-${Date.now()}-cover.jpeg`;
+  await sharp(req.files.cover[0].buffer)
+    .resize(1024, 768)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`../public/img/uploads/${req.body.cover}`);
+
   req.body.images = [];
   await Promise.all(
-    req.files.map(async (file, i) => {
+    req.files.images.map(async (file, i) => {
       const filename = `${file.originalname.split('.')[0]}-${Date.now()}-${i + 1}.jpeg`;
       await sharp(file.buffer)
         .resize(800, 600)
@@ -34,24 +45,24 @@ exports.resizeImages = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.getAllProducts = catchAsync(async (req, res, next) => {
-  const products = await Product.find();
+exports.getGallery = catchAsync(async (req, res, next) => {
+  const gallery = await Gallery.find();
 
   res.status(200).json({
     status: 'success',
-    results: products.length,
+    results: gallery.length,
     data: {
-      products,
+      gallery,
     },
   });
 });
 
-exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+exports.getGalleryPiece = catchAsync(async (req, res, next) => {
+  const piece = await Gallery.findById(req.params.id);
 
-  if (!product) {
+  if (!piece) {
     return next(
-      new AppError(`No product found with id <${req.params.id}>`),
+      new AppError(`No gallery piece found with id <${req.params.id}>`),
       404,
     );
   }
@@ -59,37 +70,37 @@ exports.getProduct = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      product,
+      piece,
     },
   });
 });
 
-exports.createProduct = catchAsync(async (req, res, next) => {
+exports.createGalleryPiece = catchAsync(async (req, res, next) => {
   if (req.file) {
     req.body.images = req.file.filename;
   }
-  const product = await Product.create(req.body);
+  const piece = await Gallery.create(req.body);
 
   res.status(201).json({
     status: 'success',
     data: {
-      product,
+      piece,
     },
   });
 });
 
-exports.updateProduct = catchAsync(async (req, res, next) => {
+exports.updateGalleryPiece = catchAsync(async (req, res, next) => {
   if (req.file) {
     req.body.images = req.file.filename;
   }
-  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+  const piece = await Gallery.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
 
-  if (!product) {
+  if (!piece) {
     return next(
-      new AppError(`No product found with id <${req.params.id}>`),
+      new AppError(`No gallery piece found with id <${req.params.id}>`),
       404,
     );
   }
@@ -97,17 +108,17 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      product,
+      piece,
     },
   });
 });
 
-exports.deleteProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findByIdAndDelete(req.params.id);
+exports.deleteGalleryPiece = catchAsync(async (req, res, next) => {
+  const piece = await Gallery.findByIdAndDelete(req.params.id);
 
-  if (!product) {
+  if (!piece) {
     return next(
-      new AppError(`No product found with id <${req.params.id}>`),
+      new AppError(`No gallery piece found with id <${req.params.id}>`),
       404,
     );
   }
