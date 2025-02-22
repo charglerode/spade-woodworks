@@ -7,6 +7,7 @@
   <p *ngIf="error.length > 0" class="feedback error">{{ error }}</p>
   <p *ngIf="message.length > 0" class="feedback">{{ message }}</p>
   <form
+    class="contact"
     [formGroup]="contactForm"
     *ngIf="message.length === 0 && error.length === 0"
     (ngSubmit)="onSubmit()"

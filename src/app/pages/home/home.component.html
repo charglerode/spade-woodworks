@@ -10,33 +10,40 @@
     <div class="block">
       <img src="./img/handmade.png" />
       <p>
-        Every piece is hand-made, from wood selection, to joinery, to final
-        finish. We take great care in building every piece and you can be sure
-        that each one is as unique as the craftsman.
+        Discover the art of true craftsmanship with our hand-made pieces. Each
+        item is meticulously created—from the careful selection of premium wood,
+        through traditional joinery techniques, to the flawless final finish.
+        Our artisans pour passion and precision into every detail, ensuring that
+        every creation is a one-of-a-kind masterpiece that reflects both quality
+        and individuality.
       </p>
     </div>
     <div class="block">
       <img src="./img/bespoke.png" />
       <p>
-        Have specific space requirements for that one wall? Want a particular
-        wood species to match your home? Regardless of your needs, we strive to
-        meet them and will custom build everything to your specifications. Your
-        satisfaction is our goal.
+        Imagine a space designed just for you. Whether it's that one special
+        wall or a signature wood species that perfectly complements your home,
+        we tailor every detail to your unique vision. Our expert craftsmen work
+        closely with you to custom-build each piece, ensuring a flawless fit and
+        ultimate satisfaction every time.
       </p>
     </div>
     <div class="block">
       <img src="./img/sustainable.png" />
       <p>
-        We use 100% solid, domestic, non-endangered hardwood in all of our
-        pieces. We don't use plywood, particle board, or any other manufactured
-        woods. We also don't use any glues or finishes that are toxic or contain
-        dangerous solvents.
+        Experience the difference of true quality and sustainability. Our pieces
+        are crafted from 100% solid, domestic, non-endangered hardwood—never
+        plywood, particle board, or any manufactured substitutes. Plus, our
+        eco-friendly process ensures no toxic glues or dangerous solvents are
+        used, so you can enjoy beauty and safety in every detail.
       </p>
     </div>
   </div>
   <div *ngIf="product" class="product">
     <div class="row">
-      <img src="./img/uploads/{{ product.images[0] }}" />
+      <a [routerLink]="['/products', product._id]"
+        ><img src="./img/uploads/{{ product.images[0] }}"
+      /></a>
       <p>
         {{ product.description }}
       </p>
