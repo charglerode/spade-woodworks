@@ -39,8 +39,15 @@ p {
   padding: 0;
 }
 
+h1 {
+  font-family: 'Imperial Script', serif;
+  font-weight: 900;
+  font-style: normal;
+  font-size: 32px;
+  margin: 0;
+}
+
 a,
-h1,
 h2,
 h3,
 h4,
@@ -189,26 +196,39 @@ select:focus {
   border-bottom: 2px solid var(--secondary-color);
 }
 
-input[type='file']::file-selector-button {
-  font-family: 'Anaheim', sans-serif;
-  font-size: 14px;
-  background-color: var(--secondary-color);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: var(--radius);
-  cursor: pointer;
-  &:hover {
-    background-color: var(--secondary-light);
-  }
-  &:disabled {
-    background-color: var(--primary-light);
-    cursor: not-allowed;
-  }
+.file-select {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
 
-  &:hover:not(:disabled) {
-    background-color: var(--secondary-light);
+.file-label,
+.file-label:focus,
+.file-label:link,
+.file-label:hover,
+.file-label:active,
+.file-label:visited,
+.file-label:visited:active {
+  display: block !important;
+  position: relative;
+  width: 128px;
+  height: 96px;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #fff !important;
+  cursor: pointer;
+  font-size: large !important;
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
   }
+}
+
+.file-label,
+.file-label:focus ~ .file-label {
+  position: relative !important;
 }
 
 // PRODUCTS / INVENTORY

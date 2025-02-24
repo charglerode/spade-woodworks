@@ -25,22 +25,22 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin/products/:id',
-    component: ProductEditComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'admin/products/new',
     component: ProductEditComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin/gallery/:id',
-    component: GalleryEditComponent,
+    path: 'admin/products/:id',
+    component: ProductEditComponent,
     canActivate: [AuthGuard],
   },
   {
     path: 'admin/gallery/new',
+    component: GalleryEditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/gallery/:id',
     component: GalleryEditComponent,
     canActivate: [AuthGuard],
   },
