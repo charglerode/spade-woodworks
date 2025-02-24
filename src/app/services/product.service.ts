@@ -36,4 +36,24 @@ export class ProductService {
         }),
       );
   }
+
+  addNewProduct(body: any): Observable<any> {
+    return this.http
+      .post<Product>(`http://127.0.0.1:8000${this.api}`, body)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(() => error);
+        }),
+      );
+  }
+
+  updateProduct(id: string, body: any): Observable<any> {
+    return this.http
+      .patch<Product>(`http://127.0.0.1:8000${this.api}${id}`, body)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(() => error);
+        }),
+      );
+  }
 }

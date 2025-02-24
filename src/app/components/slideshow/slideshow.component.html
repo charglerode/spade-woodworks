@@ -1,11 +1,11 @@
 <div class="slideshow-container">
   <div class="main-image">
-    <img src="./img/uploads/{{ images[currentIndex] }}" alt="Slideshow Image" />
+    <img src="img/uploads/{{ images[currentIndex] }}" alt="Slideshow Image" />
   </div>
   <div class="thumbnails">
     <img
       *ngFor="let img of images; let i = index"
-      [src]="img"
+      src="img/uploads/{{ img }}"
       alt="Thumbnail Image"
       [class.active]="i === currentIndex"
       (click)="selectImage(i)"

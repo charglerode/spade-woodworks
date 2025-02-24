@@ -27,7 +27,7 @@ export class GalleryService {
     );
   }
 
-  addGalleryPiece(body: any): Observable<any> {
+  addNewGalleryPiece(body: any): Observable<any> {
     return this.http
       .post<Gallery>(`http://127.0.0.1:8000${this.api}`, body)
       .pipe(

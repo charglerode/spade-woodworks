@@ -6,56 +6,64 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Product } from '../../../models/product.model';
-import { InventoryService } from '../../../services/inventory.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ProductService } from '../../../services/product.service';
+import { Gallery } from '../../../models/gallery.model';
+import { GalleryService } from '../../../services/gallery.service';
 
 @Component({
-  selector: 'app-item-details',
+  selector: 'app-gallery-edit',
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
-  templateUrl: './item-details.component.html',
-  styleUrl: './item-details.component.scss',
+  templateUrl: './gallery-edit.component.html',
+  styleUrl: './gallery-edit.component.scss',
 })
-export class ItemDetailsComponent {
+export class GalleryEditComponent {
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  itemForm: FormGroup;
-  item: Product | undefined;
+  galleryForm: FormGroup;
+  piece: Gallery | undefined;
   images: any[] = [];
+  cover: any[] = [];
   files!: FileList | null;
+  timeout: any;
   error = '';
+  message = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private service: InventoryService,
+    private service: GalleryService,
   ) {
-    this.itemForm = this.fb.group({
+    this.galleryForm = this.fb.group({
       name: [
         '',
         [Validators.required, Validators.pattern(/^[A-Za-z\s'-]{2,}$/)],
       ],
-      price: ['', [Validators.required, Validators.pattern(/^[0-9\s]{1,}$/)]],
-      available: false,
-      category: ['', [Validators.required]],
+      teaser: ['', [Validators.required, Validators.minLength(10)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       images: this.fb.array([]),
-      featured: false,
+      cover: this.fb.array([]),
     });
   }
 
   ngOnInit(): void {
     const id: string | null = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
-      this.service.getItemById(id).subscribe((res) => {
-        this.item = res.data.product;
-        this.itemForm.patchValue({ name: this.item?.name });
-        this.itemForm.patchValue({ price: this.item?.price });
-        this.itemForm.patchValue({ available: this.item?.available });
-        this.itemForm.patchValue({ category: this.item?.category });
-        this.itemForm.patchValue({ description: this.item?.description });
-        this.itemForm.patchValue({ featured: this.item?.featured });
+      this.service.getGalleryPieceById(id).subscribe({
+        next: (res) => {
+          if (res.status == 'success') {
+            this.piece = res.data.piece;
+            this.galleryForm.patchValue({ name: this.piece?.name });
+            this.galleryForm.patchValue({ teaser: this.piece?.teaser });
+            this.galleryForm.patchValue({
+              description: this.piece?.description,
+            });
+          }
+        },
+        error: (err) => {
+          //TODO add error message
+        },
       });
     }
   }
@@ -78,37 +86,45 @@ export class ItemDetailsComponent {
   onSubmit(): void {
     let formData: any = new FormData();
     let imgs = [];
-    if (this.itemForm.valid) {
-      Object.keys(this.itemForm.controls).forEach((formControlName) => {
+    if (this.galleryForm.valid) {
+      Object.keys(this.galleryForm.controls).forEach((formControlName) => {
         formData.append(
           formControlName,
-          this.itemForm.get(formControlName)?.value,
+          this.galleryForm.get(formControlName)?.value,
         );
       });
       for (let i = 0; i < this.files?.length!; i++) {
         formData.append('images', this.files![i]);
       }
     }
-    if (this.item) {
-      this.service.updateItem(this.item?._id, formData).subscribe({
+    if (this.piece) {
+      this.service.updateGalleryPiece(this.piece?._id, formData).subscribe({
         next: (res) => {
           if (res.status === 'success') {
-            this.router.navigate(['/inventory']);
+            this.message = 'Gallery piece successfully updated.';
+            this.timeout = setTimeout(() => {
+              clearTimeout(this.timeout);
+              this.router.navigate(['/admin']);
+            }, 3000);
           }
         },
         error: (err) => {
           if (err.status === 404) {
-            this.error = `No product found with id: ${this.item?._id}`;
+            this.error = `No product found with id: ${this.piece?._id}`;
           } else {
             this.error = 'An unknown error occurred. Please try again later.';
           }
         },
       });
     } else {
-      this.service.addItem(formData).subscribe({
+      this.service.addNewGalleryPiece(formData).subscribe({
         next: (res) => {
           if (res.status === 'success') {
-            this.router.navigate(['/inventory']);
+            this.message = 'New gallery piece successfully added.';
+            this.timeout = setTimeout(() => {
+              clearTimeout(this.timeout);
+              this.router.navigate(['/admin']);
+            }, 3000);
           }
         },
         error: (err) => {

@@ -8,33 +8,46 @@ import { CommissionsComponent } from './pages/commissions/commissions.component'
 import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { ReturnsComponent } from './pages/returns/returns.component';
 import { ShippingComponent } from './pages/shipping/shipping.component';
-import { InventoryComponent } from './pages/inventory/inventory.component';
-import { ItemDetailsComponent } from './pages/inventory/item-details/item-details.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { ForgotComponent } from './pages/auth/forgot/forgot.component';
 import { ResetComponent } from './pages/auth/reset/reset.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { ProductEditComponent } from './pages/products/product-edit/product-edit.component';
+import { GalleryDetailsComponent } from './pages/gallery/gallery-details/gallery-details.component';
+import { GalleryEditComponent } from './pages/gallery/gallery-edit/gallery-edit.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/products/:id',
+    component: ProductEditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/products/new',
+    component: ProductEditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/gallery/:id',
+    component: GalleryEditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/gallery/new',
+    component: GalleryEditComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'products', component: ProductsComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
-  {
-    path: 'inventory',
-    component: InventoryComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'inventory/new',
-    component: ItemDetailsComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'inventory/:id',
-    component: ItemDetailsComponent,
-    canActivate: [AuthGuard],
-  },
   { path: 'gallery', component: GalleryComponent },
+  { path: 'gallery/:id', component: GalleryDetailsComponent },
   { path: 'commissions', component: CommissionsComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'privacy', component: PrivacyComponent },

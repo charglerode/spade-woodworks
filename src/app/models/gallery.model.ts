@@ -1,8 +1,8 @@
 export interface Gallery {
   _id: string;
   name: string;
-  teaser: number;
-  description: boolean;
+  teaser: string;
+  description: string;
   cover: string;
   images: string[];
 }

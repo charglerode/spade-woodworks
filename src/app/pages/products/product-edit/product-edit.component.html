@@ -1,16 +1,24 @@
 <section class="inventory-item">
-  <button routerLink="/inventory">Back to Inventory</button>
+  <button routerLink="/admin">Back to Admin</button>
+  <div class="results">
+    <p>{{ message }}</p>
+    <p class="error">{{ error }}</p>
+  </div>
   <form
-    [formGroup]="itemForm"
+    *ngIf="message === '' && error === ''"
+    [formGroup]="productForm"
     enctype="multipart/form-data"
     (ngSubmit)="onSubmit()"
   >
-    <div class="images">
+    <div *ngIf="product && images.length === 0" class="images">
       <img
-        *ngFor="let image of images"
-        src="./img/uploads/{{ image }}"
+        *ngFor="let image of product.images"
+        src="img/uploads/{{ image }}"
         height="96"
       />
+    </div>
+    <div *ngIf="images" class="images">
+      <img *ngFor="let image of images" [src]="image" height="96" />
     </div>
     <div class="form-group">
       <input
@@ -34,12 +42,14 @@
         <label for="name">Name</label>
         <div
           class="error"
-          *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched"
+          *ngIf="
+            productForm.get('name')?.invalid && productForm.get('name')?.touched
+          "
         >
-          <small *ngIf="itemForm.get('name')?.errors?.['required']">
+          <small *ngIf="productForm.get('name')?.errors?.['required']">
             Name is required.
           </small>
-          <small *ngIf="itemForm.get('name')?.errors?.['pattern']">
+          <small *ngIf="productForm.get('name')?.errors?.['pattern']">
             Name must have at least 2 letters and can only include letters,
             hyphens, and apostrophes.
           </small>
@@ -57,13 +67,14 @@
         <div
           class="error"
           *ngIf="
-            itemForm.get('price')?.invalid && itemForm.get('price')?.touched
+            productForm.get('price')?.invalid &&
+            productForm.get('price')?.touched
           "
         >
-          <small *ngIf="itemForm.get('price')?.errors?.['required']">
+          <small *ngIf="productForm.get('price')?.errors?.['required']">
             Price is required.
           </small>
-          <small *ngIf="itemForm.get('price')?.errors?.['pattern']">
+          <small *ngIf="productForm.get('price')?.errors?.['pattern']">
             Price must be defined
           </small>
         </div>
@@ -80,14 +91,14 @@
         <div
           class="error"
           *ngIf="
-            itemForm.get('available')?.invalid &&
-            itemForm.get('available')?.touched
+            productForm.get('available')?.invalid &&
+            productForm.get('available')?.touched
           "
         >
-          <small *ngIf="itemForm.get('available')?.errors?.['required']">
+          <small *ngIf="productForm.get('available')?.errors?.['required']">
             Price is required.
           </small>
-          <small *ngIf="itemForm.get('available')?.errors?.['pattern']">
+          <small *ngIf="productForm.get('available')?.errors?.['pattern']">
             Price must be defined
           </small>
         </div>
@@ -104,11 +115,11 @@
         <div
           class="error"
           *ngIf="
-            itemForm.get('available')?.invalid &&
-            itemForm.get('available')?.touched
+            productForm.get('available')?.invalid &&
+            productForm.get('available')?.touched
           "
         >
-          <small *ngIf="itemForm.get('featured')?.errors?.['pattern']">
+          <small *ngIf="productForm.get('featured')?.errors?.['pattern']">
             Price must be defined
           </small>
         </div>
@@ -132,13 +143,14 @@
       <div
         class="error"
         *ngIf="
-          itemForm.get('category')?.invalid && itemForm.get('category')?.touched
+          productForm.get('category')?.invalid &&
+          productForm.get('category')?.touched
         "
       >
-        <small *ngIf="itemForm.get('category')?.errors?.['required']">
+        <small *ngIf="productForm.get('category')?.errors?.['required']">
           Category is required.
         </small>
-        <small *ngIf="itemForm.get('category')?.errors?.['pattern']">
+        <small *ngIf="productForm.get('category')?.errors?.['pattern']">
           Category must be defined
         </small>
       </div>
@@ -155,23 +167,21 @@
       <div
         class="error"
         *ngIf="
-          itemForm.get('description')?.invalid &&
-          itemForm.get('description')?.touched
+          productForm.get('description')?.invalid &&
+          productForm.get('description')?.touched
         "
       >
-        <small *ngIf="itemForm.get('description')?.errors?.['required']">
+        <small *ngIf="productForm.get('description')?.errors?.['required']">
           Description is required.
         </small>
-        <small *ngIf="itemForm.get('description')?.errors?.['pattern']">
+        <small *ngIf="productForm.get('description')?.errors?.['pattern']">
           Description must be defined
         </small>
       </div>
     </div>
-    <button *ngIf="!item" type="submit" [disabled]="itemForm.invalid">
+    <button *ngIf="!product" type="submit" [disabled]="productForm.invalid">
       Add Item
     </button>
-    <button *ngIf="item" type="submit" [disabled]="itemForm.invalid">
-      Update Item
-    </button>
+    <button *ngIf="product" type="submit">Update Item</button>
   </form>
 </section>

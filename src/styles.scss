@@ -240,7 +240,6 @@ input[type='file']::file-selector-button {
     margin-top: 0;
   }
   .content {
-    height: 33%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -248,12 +247,13 @@ input[type='file']::file-selector-button {
   }
   .price,
   .unavailable {
+    font-size: xx-large;
     text-align: center;
     background-color: var(--primary-light);
   }
   .price {
-    color: var(--accent-light);
-    font-weight: bolder;
-    font-size: x-large;
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: xx-large;
   }
 }

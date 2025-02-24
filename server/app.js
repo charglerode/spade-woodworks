@@ -11,7 +11,7 @@ const AppError = require('./utils/error');
 const errorHandler = require('./controllers/error.controller');
 const products = require('./routes/product.route');
 const users = require('./routes/user.route');
-const inventory = require('./routes/inventory.route');
+// const inventory = require('./routes/inventory.route');
 const contact = require('./routes/contact.route');
 const gallery = require('./routes/gallery.route');
 
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const limiter = rateLimit({
-  max: 100,
+  max: 1000,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP, please try again in an hour',
 });
@@ -46,7 +46,7 @@ app.use(hpp());
 
 app.use('/api/v1/products', products);
 app.use('/api/v1/users', users);
-app.use('/api/v1/inventory', inventory);
+// app.use('/api/v1/inventory', inventory);
 app.use('/api/v1/contact', contact);
 app.use('/api/v1/gallery', gallery);
 

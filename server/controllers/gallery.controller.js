@@ -23,20 +23,20 @@ exports.uploadImages = upload.fields([
 exports.resizeImages = catchAsync(async (req, res, next) => {
   if (!req.files.cover || !req.files.images) return next();
 
-  req.body.cover = `${req.files.cover[0].originalname.split('.')[0]}-${Date.now()}-cover.jpeg`;
+  req.body.cover = `${req.files.cover[0].originalname.split('.')[0]}-${Date.now()}-cover.jpg`;
   await sharp(req.files.cover[0].buffer)
     .resize(1024, 768)
-    .toFormat('jpeg')
+    .toFormat('jpg')
     .jpeg({ quality: 90 })
     .toFile(`../public/img/uploads/${req.body.cover}`);
 
   req.body.images = [];
   await Promise.all(
     req.files.images.map(async (file, i) => {
-      const filename = `${file.originalname.split('.')[0]}-${Date.now()}-${i + 1}.jpeg`;
+      const filename = `${file.originalname.split('.')[0]}-${Date.now()}-${i + 1}.jpg`;
       await sharp(file.buffer)
         .resize(800, 600)
-        .toFormat('jpeg')
+        .toFormat('jpg')
         .jpeg({ quality: 90 })
         .toFile(`../public/img/uploads/${filename}`);
       req.body.images.push(filename);

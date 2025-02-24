@@ -1,0 +1,69 @@
+<section>
+  <div class="nav">
+    <button
+      (click)="selected = 'products'"
+      [disabled]="selected === 'products'"
+    >
+      Products
+    </button>
+    <button (click)="selected = 'gallery'" [disabled]="selected === 'gallery'">
+      Gallery
+    </button>
+    <button (click)="onLogout()">Logout</button>
+  </div>
+
+  <div class="container products" *ngIf="selected === 'products'">
+    <div class="form-row">
+      <button (click)="onNewProduct()">New Product</button>
+    </div>
+    <ng-container *ngFor="let category of categories">
+      <h2 class="category">{{ category }}</h2>
+      <div
+        class="item-list"
+        *ngIf="
+          groupedItems[category] && groupedItems[category].length > 0;
+          else noProducts
+        "
+      >
+        <div
+          class="card"
+          *ngFor="let item of groupedItems[category]"
+          [routerLink]="['/admin/products/', item._id]"
+        >
+          <div class="header">
+            <img src="./img/uploads/{{ item.images[0] }}" width="300" />
+          </div>
+          <div class="content">
+            <h3>{{ item.name }}</h3>
+            <div *ngIf="item.available; else outOfStock">
+              <p class="price">${{ item.price }}</p>
+            </div>
+          </div>
+          <ng-template #outOfStock
+            ><p class="unavailable">Out of Stock</p></ng-template
+          >
+        </div>
+      </div>
+      <ng-template #noProducts>
+        <p class="no-products">No Items Available</p>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <div class="container gallery" *ngIf="selected === 'gallery'">
+    <div class="form-row">
+      <button (click)="onNewGalleryPiece()">New Gallery Piece</button>
+    </div>
+    <a
+      *ngFor="let piece of gallery"
+      [routerLink]="['/admin/gallery/', piece._id]"
+      class="block"
+    >
+      <img src="./img/uploads/{{ piece.cover }}" width="450" height="300" />
+      <div class="description">
+        <h3>{{ piece.name }}</h3>
+        <p>{{ piece.teaser }}</p>
+      </div>
+    </a>
+  </div>
+</section>
