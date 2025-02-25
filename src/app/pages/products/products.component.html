@@ -1,5 +1,6 @@
 <section class="products">
   <h1>Our Products</h1>
+  <p *ngIf="error.length > 0">{{ error }}</p>
   <div class="form-group sorting">
     <select id="sort-select" (change)="onSortChange($event)">
       <option value="priceAsc" [selected]="selectedSort === 'priceAsc'">

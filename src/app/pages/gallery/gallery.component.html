@@ -1,5 +1,6 @@
 <section class="gallery">
   <h1>Showcase Gallery</h1>
+  <p *ngIf="error.length > 0">{{ error }}</p>
   <a
     *ngFor="let piece of gallery"
     [routerLink]="['/gallery/', piece._id]"

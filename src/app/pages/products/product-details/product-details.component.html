@@ -1,9 +1,10 @@
 <section>
   <button routerLink="/products">Back to Products</button>
+  <p *ngIf="error.length > 0">{{ error }}</p>
   <div class="details" *ngIf="product; else notFound">
     <slideshow [images]="product.images"></slideshow>
     <div class="header">
-      <h1>{{ product.name }}</h1>
+      <h2>{{ product.name }}</h2>
       <p class="price">${{ product.price }}</p>
     </div>
     <p *ngIf="product.description">{{ product.description }}</p>

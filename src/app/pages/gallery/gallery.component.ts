@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 })
 export class GalleryComponent {
   gallery: Gallery[] = [];
+  error = '';
 
   constructor(private service: GalleryService) {}
 
@@ -23,7 +24,7 @@ export class GalleryComponent {
         }
       },
       error: (err) => {
-        //TODO show error text
+        this.error = 'An unknown error occurred. Please try again later.';
       },
     });
   }
