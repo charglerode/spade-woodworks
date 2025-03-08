@@ -1,5 +1,7 @@
 .available,
-.featured {
+.featured,
+.fixed,
+.default {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -16,6 +18,14 @@
   order: 3;
 }
 
+.fixed input {
+  order: 2;
+}
+
+.default input {
+  order: 3;
+}
+
 .images {
   display: flex;
   flex-direction: row;
@@ -27,4 +37,22 @@
 
 .results {
   text-align: center;
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 20px;
+  box-sizing: border-box;
+  margin: 20px 0;
+  padding: 20px;
+  min-width: 960px;
+  border-radius: var(--radius);
+  border: 1px solid var(--primary-color);
+}
+
+.delete,
+.align {
+  align-self: center;
 }

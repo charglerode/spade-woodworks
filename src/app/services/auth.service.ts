@@ -2,11 +2,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  jwtHelper = new JwtHelperService();
   private readonly api = '/api/v1/users';
   error = '';
 
@@ -58,10 +60,16 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('jwt');
-    if (!token) {
-      return false;
+    if (token) {
+      const isExpired = this.jwtHelper.isTokenExpired(token);
+      if (isExpired) {
+        localStorage.removeItem('jwt');
+        return false;
+      } else {
+        return true;
+      }
     } else {
-      return true;
+      return false;
     }
   }
 }

@@ -5,12 +5,33 @@
     <slideshow [images]="product.images"></slideshow>
     <div class="header">
       <h2>{{ product.name }}</h2>
-      <p class="price">${{ product.price }}</p>
+      <p class="price">${{ getTotalPrice() }}</p>
     </div>
     <p *ngIf="product.description">{{ product.description }}</p>
+    <div class="options">
+      <div class="group" *ngFor="let option of product.options">
+        <h3>{{ option.name }}</h3>
+        <div class="items">
+          <div
+            class="item"
+            *ngFor="let item of option.items; index as i"
+            [class.selected]="isSelected(option.name, i)"
+            (click)="onOptionSelected(option.name, i)"
+          >
+            <img *ngIf="item.image" src="https://placehold.co/64x64" />
+            <div class="content">
+              <p>{{ item.name }}</p>
+              <h3 *ngIf="item.price !== 0">
+                ${{ getAdjustedPrice(item.price, item.fixed) }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="actions">
       <button [disabled]="!product.available">
-        <span *ngIf="product.available; else outOfStock">Purchase</span>
+        <span *ngIf="product.available; else outOfStock">Add to Cart</span>
       </button>
     </div>
     <ng-template #outOfStock>Out of Stock</ng-template>

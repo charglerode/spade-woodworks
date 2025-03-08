@@ -180,6 +180,104 @@
         </small>
       </div>
     </div>
+
+    <h3>Options</h3>
+    <button type="button" (click)="addGroup()">
+      <i class="fa-solid fa-plus"></i> Add Group
+    </button>
+    <div formArrayName="options">
+      <div
+        class="option-card"
+        *ngFor="let group of options.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="form-row">
+          <div class="form-group">
+            <input
+              id="group-name"
+              type="text"
+              formControlName="name"
+              placeholder="Group Name"
+            />
+            <label for="group-name">Group Name</label>
+          </div>
+          <button class="delete" (click)="removeGroup(i)">
+            <i class="fa-solid fa-x"></i>
+          </button>
+        </div>
+
+        <div formArrayName="items">
+          <div
+            class="form-row"
+            *ngFor="let item of getItems(i).controls; let j = index"
+            [formGroupName]="j"
+          >
+            <div class="form-row">
+              <div class="form-group input-md">
+                <input
+                  id="item-name"
+                  type="text"
+                  formControlName="name"
+                  placeholder="Item Name"
+                />
+                <label for="item-name">Name</label>
+              </div>
+              <div class="form-group input-sm">
+                <input
+                  id="item-price"
+                  type="number"
+                  formControlName="price"
+                  placeholder="Price"
+                />
+                <label for="item-price">Price</label>
+              </div>
+              <div class="form-group input-sm">
+                <input
+                  id="multiplier"
+                  type="number"
+                  formControlName="multiplier"
+                  placeholder="Multiplier"
+                />
+                <label for="multiplier">Multiplier</label>
+              </div>
+              <div class="form-group input-md">
+                <input
+                  id="item-image"
+                  type="text"
+                  formControlName="image"
+                  placeholder="Image URL"
+                />
+                <label for="item-image">Image</label>
+              </div>
+              <div class="form-group input-sm fixed">
+                <input
+                  id="item-fixed"
+                  type="checkbox"
+                  formControlName="fixed"
+                />
+                Fixed
+              </div>
+              <div class="form-group input-sm default">
+                <input
+                  id="item-default"
+                  type="checkbox"
+                  formControlName="default"
+                />
+                Default
+              </div>
+            </div>
+
+            <button class="delete" type="button" (click)="removeItem(i, j)">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+        <button class="align" type="button" (click)="addItem(i)">
+          <i class="fa-solid fa-plus"></i> Add Item
+        </button>
+      </div>
+    </div>
+
     <button *ngIf="!product" type="submit" [disabled]="productForm.invalid">
       Add Item
     </button>

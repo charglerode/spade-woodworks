@@ -5,10 +5,12 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  FormArray,
 } from '@angular/forms';
-import { Product } from '../../../models/product.model';
+import { Product, ProductItem } from '../../../models/product.model';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-edit',
@@ -27,6 +29,10 @@ export class ProductEditComponent {
   error = '';
   message = '';
 
+  get options(): FormArray {
+    return this.productForm.get('options') as FormArray;
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,6 +50,7 @@ export class ProductEditComponent {
       description: ['', [Validators.required, Validators.minLength(10)]],
       images: this.fb.array([]),
       featured: false,
+      options: this.fb.array([]),
     });
   }
 
@@ -52,14 +59,51 @@ export class ProductEditComponent {
     if (id !== null) {
       this.service.getProductById(id).subscribe((res) => {
         this.product = res.data.product;
-        this.productForm.patchValue({ name: this.product?.name });
-        this.productForm.patchValue({ price: this.product?.price });
-        this.productForm.patchValue({ available: this.product?.available });
-        this.productForm.patchValue({ category: this.product?.category });
-        this.productForm.patchValue({ description: this.product?.description });
-        this.productForm.patchValue({ featured: this.product?.featured });
+        this.productForm.patchValue({
+          name: this.product?.name,
+          price: this.product?.price,
+          available: this.product?.available,
+          category: this.product?.category,
+          description: this.product?.description,
+          featured: this.product?.featured,
+        });
+        this.setProductOptions(this.product?.options || []);
       });
     }
+  }
+
+  addGroup(): void {
+    this.options.push(
+      this.fb.group({
+        name: ['', Validators.required],
+        items: this.fb.array([]), // Items under this group
+      }),
+    );
+  }
+
+  removeGroup(index: number): void {
+    this.options.removeAt(index);
+  }
+
+  getItems(groupIndex: number): FormArray {
+    return (this.options.at(groupIndex) as FormGroup).get('items') as FormArray;
+  }
+
+  addItem(groupIndex: number): void {
+    this.getItems(groupIndex).push(
+      this.fb.group({
+        name: ['', Validators.required],
+        price: [0, Validators.required],
+        fixed: [true],
+        multiplier: [0],
+        image: [''],
+        default: [false],
+      }),
+    );
+  }
+
+  removeItem(groupIndex: number, itemIndex: number): void {
+    this.getItems(groupIndex).removeAt(itemIndex);
   }
 
   onImageChange(): void {
@@ -78,53 +122,111 @@ export class ProductEditComponent {
   }
 
   onSubmit(): void {
-    let formData: any = new FormData();
-    let imgs = [];
     if (this.productForm.valid) {
-      Object.keys(this.productForm.controls).forEach((formControlName) => {
-        formData.append(
-          formControlName,
-          this.productForm.get(formControlName)?.value,
-        );
-      });
-      for (let i = 0; i < this.files?.length!; i++) {
-        formData.append('images', this.files![i]);
+      const formData = this.convertFormToFormData(this.productForm);
+      if (this.product) {
+        this.service.updateProduct(this.product._id, formData).subscribe({
+          next: (res) => {
+            this.message = 'Product successfully updated.';
+            this.redirectAfterSuccess();
+          },
+          error: this.handleError.bind(this),
+        });
+      } else {
+        this.service.addNewProduct(formData).subscribe({
+          next: (res) => {
+            this.message = 'Product successfully added.';
+            this.redirectAfterSuccess();
+          },
+          error: this.handleError.bind(this),
+        });
       }
     }
-    if (this.product) {
-      this.service.updateProduct(this.product?._id, formData).subscribe({
-        next: (res) => {
-          if (res.status === 'success') {
-            this.message = 'Product successfully updated.';
-            this.timeout = setTimeout(() => {
-              clearTimeout(this.timeout);
-              this.router.navigate(['/admin']);
-            }, 3000);
-          }
-        },
-        error: (err) => {
-          if (err.status === 404) {
-            this.error = `No product found with id: ${this.product?._id}`;
-          } else {
-            this.error = 'An unknown error occurred. Please try again later.';
-          }
-        },
+  }
+
+  private setProductOptions(options: any[]): void {
+    options.forEach((group) => {
+      const groupForm = this.fb.group({
+        name: [group.name, Validators.required],
+        items: this.fb.array([]),
       });
-    } else {
-      this.service.addNewProduct(formData).subscribe({
-        next: (res) => {
-          if (res.status === 'success') {
-            this.message = 'Product successfully added.';
-            this.timeout = setTimeout(() => {
-              clearTimeout(this.timeout);
-              this.router.navigate(['/admin']);
-            }, 3000);
-          }
-        },
-        error: (err) => {
-          this.error = `An unknown error occurred. Please try again later. ${err}`;
-        },
+
+      // Populate items in the group
+      group.items.forEach((item: ProductItem) => {
+        (groupForm.get('items') as FormArray).push(
+          this.fb.group({
+            name: [item.name, Validators.required],
+            price: [item.price, Validators.required],
+            fixed: [item.fixed],
+            multiplier: [item.multiplier],
+            image: [item.image],
+            default: [item.default],
+          }),
+        );
       });
+
+      this.options.push(groupForm);
+    });
+  }
+
+  private convertFormToFormData(form: FormGroup): FormData {
+    const formData = new FormData();
+
+    formData.append('name', form.get('name')?.value);
+    formData.append('price', form.get('price')?.value);
+    formData.append('available', form.get('available')?.value);
+    formData.append('category', form.get('category')?.value);
+    formData.append('description', form.get('description')?.value);
+    formData.append('featured', form.get('featured')?.value);
+    if (this.files) {
+      for (let i = 0; i < this.files.length; i++) {
+        formData.append('images', this.files[i]);
+      }
     }
+
+    this.options.controls.forEach((groupControl, groupIndex) => {
+      const group = groupControl.value;
+      formData.append(`options[${groupIndex}][name]`, group.name);
+
+      group.items.forEach((item: any, itemIndex: number) => {
+        formData.append(
+          `options[${groupIndex}][items][${itemIndex}][name]`,
+          item.name,
+        );
+        formData.append(
+          `options[${groupIndex}][items][${itemIndex}][price]`,
+          item.price,
+        );
+        formData.append(
+          `options[${groupIndex}][items][${itemIndex}][fixed]`,
+          item.fixed,
+        );
+        formData.append(
+          `options[${groupIndex}][items][${itemIndex}][multiplier]`,
+          item.multiplier,
+        );
+        formData.append(
+          `options[${groupIndex}][items][${itemIndex}][image]`,
+          item.image,
+        );
+        formData.append(
+          `options[${groupIndex}][items][${itemIndex}][default]`,
+          item.default,
+        );
+      });
+    });
+
+    return formData;
+  }
+
+  private redirectAfterSuccess(): void {
+    this.timeout = setTimeout(() => {
+      clearTimeout(this.timeout);
+      this.router.navigate(['/admin']);
+    }, 3000);
+  }
+
+  private handleError(err: HttpErrorResponse): void {
+    this.error = `An error occurred: ${err}`;
   }
 }

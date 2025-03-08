@@ -34,6 +34,41 @@ const product = new mongoose.Schema({
     default: false,
   },
   images: [String],
+  options: [
+    {
+      name: {
+        type: String,
+        trim: true,
+        required: [true, 'A product option requires a <GROUP>'],
+      },
+      items: [
+        {
+          name: {
+            type: String,
+            trim: true,
+            required: [true, 'Product option <NAME> is required'],
+          },
+          price: {
+            type: Number,
+            default: 0,
+          },
+          image: String,
+          fixed: {
+            type: Boolean,
+            default: true,
+          },
+          multiplier: {
+            type: Number,
+            default: 0,
+          },
+          default: {
+            type: Boolean,
+            default: false,
+          },
+        },
+      ],
+    },
+  ],
 });
 
 const Product = mongoose.model('Product', product);
