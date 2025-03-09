@@ -5,7 +5,7 @@
     <slideshow [images]="product.images"></slideshow>
     <div class="header">
       <h2>{{ product.name }}</h2>
-      <p class="price">${{ getTotalPrice() }}</p>
+      <p class="price">{{ getTotalPrice() | currency }}</p>
     </div>
     <p *ngIf="product.description">{{ product.description }}</p>
     <div class="options">
@@ -18,19 +18,18 @@
             [class.selected]="isSelected(option.name, i)"
             (click)="onOptionSelected(option.name, i)"
           >
-            <img *ngIf="item.image" src="https://placehold.co/64x64" />
             <div class="content">
               <p>{{ item.name }}</p>
-              <h3 *ngIf="item.price !== 0">
-                ${{ getAdjustedPrice(item.price, item.fixed) }}
-              </h3>
+              <p class="price" *ngIf="item.price !== 0">
+                +{{ getAdjustedPrice(item.price, item.fixed) | currency }}
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="actions">
-      <button [disabled]="!product.available">
+      <button [disabled]="!product.available" (click)="onAddToCart()">
         <span *ngIf="product.available; else outOfStock">Add to Cart</span>
       </button>
     </div>

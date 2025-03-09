@@ -20,6 +20,5 @@ export interface ProductItem {
   price: number;
   fixed: boolean;
   multiplier: number;
-  image: string;
   default: boolean;
 }

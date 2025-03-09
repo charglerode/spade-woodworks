@@ -46,7 +46,6 @@ app.use(hpp());
 
 app.use('/api/v1/products', products);
 app.use('/api/v1/users', users);
-// app.use('/api/v1/inventory', inventory);
 app.use('/api/v1/contact', contact);
 app.use('/api/v1/gallery', gallery);
 

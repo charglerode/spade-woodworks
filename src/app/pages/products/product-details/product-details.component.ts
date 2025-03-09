@@ -89,4 +89,8 @@ export class ProductDetailsComponent implements OnInit {
       )
     );
   }
+
+  onAddToCart(): void {
+    console.log(this.selectedOptions);
+  }
 }

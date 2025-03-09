@@ -36,7 +36,7 @@
           <div class="content">
             <h3>{{ item.name }}</h3>
             <div *ngIf="item.available; else outOfStock">
-              <p class="price">${{ item.price }}</p>
+              <p class="price">{{ item.price | currency }}</p>
             </div>
           </div>
           <ng-template #outOfStock

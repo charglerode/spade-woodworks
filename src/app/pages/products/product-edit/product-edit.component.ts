@@ -96,7 +96,6 @@ export class ProductEditComponent {
         price: [0, Validators.required],
         fixed: [true],
         multiplier: [0],
-        image: [''],
         default: [false],
       }),
     );
@@ -128,7 +127,6 @@ export class ProductEditComponent {
         this.service.updateProduct(this.product._id, formData).subscribe({
           next: (res) => {
             this.message = 'Product successfully updated.';
-            this.redirectAfterSuccess();
           },
           error: this.handleError.bind(this),
         });
@@ -136,7 +134,6 @@ export class ProductEditComponent {
         this.service.addNewProduct(formData).subscribe({
           next: (res) => {
             this.message = 'Product successfully added.';
-            this.redirectAfterSuccess();
           },
           error: this.handleError.bind(this),
         });
@@ -151,7 +148,6 @@ export class ProductEditComponent {
         items: this.fb.array([]),
       });
 
-      // Populate items in the group
       group.items.forEach((item: ProductItem) => {
         (groupForm.get('items') as FormArray).push(
           this.fb.group({
@@ -159,7 +155,6 @@ export class ProductEditComponent {
             price: [item.price, Validators.required],
             fixed: [item.fixed],
             multiplier: [item.multiplier],
-            image: [item.image],
             default: [item.default],
           }),
         );
@@ -206,10 +201,6 @@ export class ProductEditComponent {
           item.multiplier,
         );
         formData.append(
-          `options[${groupIndex}][items][${itemIndex}][image]`,
-          item.image,
-        );
-        formData.append(
           `options[${groupIndex}][items][${itemIndex}][default]`,
           item.default,
         );
@@ -217,13 +208,6 @@ export class ProductEditComponent {
     });
 
     return formData;
-  }
-
-  private redirectAfterSuccess(): void {
-    this.timeout = setTimeout(() => {
-      clearTimeout(this.timeout);
-      this.router.navigate(['/admin']);
-    }, 3000);
   }
 
   private handleError(err: HttpErrorResponse): void {
