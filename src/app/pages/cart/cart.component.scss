@@ -1,0 +1,66 @@
+.cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+h1 {
+  text-align: center;
+}
+
+table {
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+td {
+  vertical-align: top;
+}
+
+.image {
+  width: 150px;
+  padding-right: 20px;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+.details {
+  margin-bottom: 50px;
+}
+
+.form-group {
+  margin-top: 0;
+}
+
+.price {
+  text-align: right;
+  padding-top: 10px;
+  p {
+    font-weight: bold;
+  }
+}
+
+.tally {
+  text-align: right;
+}
+
+.total {
+  text-align: right;
+  font-weight: bold;
+  padding-top: 20px;
+}
+
+.delete {
+  text-align: end;
+}
+
+.spacer-top {
+  padding-top: 50px;
+}
+
+.checkout {
+  width: 25%;
+}

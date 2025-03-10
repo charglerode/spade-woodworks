@@ -16,6 +16,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { ProductEditComponent } from './pages/products/product-edit/product-edit.component';
 import { GalleryDetailsComponent } from './pages/gallery/gallery-details/gallery-details.component';
 import { GalleryEditComponent } from './pages/gallery/gallery-edit/gallery-edit.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -53,6 +54,7 @@ export const routes: Routes = [
   { path: 'privacy', component: PrivacyComponent },
   { path: 'returns', component: ReturnsComponent },
   { path: 'shipping', component: ShippingComponent },
+  { path: 'shopping-cart', component: CartComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot', component: ForgotComponent },
   { path: 'reset/:id', component: ResetComponent },

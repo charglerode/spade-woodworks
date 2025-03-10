@@ -22,3 +22,12 @@ export interface ProductItem {
   multiplier: number;
   default: boolean;
 }
+
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+  options: string[];
+}

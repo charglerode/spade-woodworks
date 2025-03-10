@@ -11,9 +11,9 @@ const AppError = require('./utils/error');
 const errorHandler = require('./controllers/error.controller');
 const products = require('./routes/product.route');
 const users = require('./routes/user.route');
-// const inventory = require('./routes/inventory.route');
 const contact = require('./routes/contact.route');
 const gallery = require('./routes/gallery.route');
+const checkout = require('./routes/checkout.route');
 
 const app = express();
 
@@ -48,6 +48,7 @@ app.use('/api/v1/products', products);
 app.use('/api/v1/users', users);
 app.use('/api/v1/contact', contact);
 app.use('/api/v1/gallery', gallery);
+// app.use('/api/v1/checkout', checkout);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl}`, 404));

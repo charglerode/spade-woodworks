@@ -8,5 +8,9 @@
     <a routerLink="/gallery" routerLinkActive="active">gallery</a>
     <a routerLink="/commissions" routerLinkActive="active">commissions</a>
     <a routerLink="/contact" routerLinkActive="active">contact</a>
+    <a routerLink="/shopping-cart"
+      ><i class="fa-solid fa-cart-shopping"></i>
+      <p class="cart" *ngIf="itemsInCart > 0">{{ itemsInCart }}</p></a
+    >
   </nav>
 </header>

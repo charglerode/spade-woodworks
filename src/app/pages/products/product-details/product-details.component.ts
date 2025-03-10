@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { RouterLink } from '@angular/router';
-import { Product, ProductItem } from '../../../models/product.model';
+import { CartItem, Product, ProductItem } from '../../../models/product.model';
 import { SlideshowComponent } from '../../../components/slideshow/slideshow.component';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -21,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: ProductService,
+    private cartService: CartService,
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +92,23 @@ export class ProductDetailsComponent implements OnInit {
     );
   }
 
-  onAddToCart(): void {
-    console.log(this.selectedOptions);
+  private parseOptions(): string[] {
+    let options: string[] = [];
+    Object.keys(this.selectedOptions).forEach((key) => {
+      options.push(`${key}: ${this.selectedOptions[key].name}`);
+    });
+    return options;
+  }
+
+  onAddToCart(product: Product): void {
+    const cartItem: CartItem = {
+      id: product._id,
+      name: product.name,
+      price: this.getTotalPrice(),
+      image: product.images[0],
+      quantity: 1,
+      options: this.parseOptions(),
+    };
+    this.cartService.addItem(cartItem);
   }
 }

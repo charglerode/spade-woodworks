@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="actions">
-      <button [disabled]="!product.available" (click)="onAddToCart()">
+      <button [disabled]="!product.available" (click)="onAddToCart(product)">
         <span *ngIf="product.available; else outOfStock">Add to Cart</span>
       </button>
     </div>

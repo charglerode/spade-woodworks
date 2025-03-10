@@ -1,0 +1,65 @@
+<section>
+  <h1>Shopping Cart</h1>
+  <div class="cart" *ngIf="cartItems.length > 0; else emptyCart">
+    <table>
+      <tr class="cart-item" *ngFor="let item of cartItems">
+        <td><img class="image" src="img/uploads/{{ item.image }}" /></td>
+        <!-- <td class="image"><img src="https://placehold.co/150x100" /></td> -->
+        <td>
+          <div class="details">
+            <h3>{{ item.name }}</h3>
+            <p *ngFor="let option of item.options">{{ option }}</p>
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <select id="quantity" name="quantity" [(ngModel)]="item.quantity">
+              <option
+                *ngFor="let quantity of [].constructor(10); index as i"
+                [value]="i + 1"
+                [selected]="item.quantity === i + 1"
+              >
+                {{ i + 1 }}
+              </option>
+            </select>
+            <label for="quantity">Quantity</label>
+          </div>
+        </td>
+        <td class="price">
+          <p>{{ item.price | currency }}</p>
+        </td>
+        <td class="delete">
+          <button (click)="removeItem(item)">Remove</button>
+        </td>
+      </tr>
+      <tr>
+        <td class="tally spacer-top" colspan="3"><p>Subtotal</p></td>
+        <td class="tally spacer-top">
+          <p>{{ subtotal | currency }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="tally" colspan="3"><p>Tax</p></td>
+        <td class="tally">
+          <p>{{ tax | currency }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="tally" colspan="3"><p>Shipping</p></td>
+        <td class="tally">
+          <p>{{ shipping | currency }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="tally total" colspan="3"><p>Total</p></td>
+        <td class="total">
+          <p>{{ subtotal + tax + shipping | currency }}</p>
+        </td>
+      </tr>
+    </table>
+    <button class="checkout" (click)="checkout()">Checkout</button>
+  </div>
+</section>
+<ng-template #emptyCart>
+  <p class="cart">Your cart is empty.</p>
+</ng-template>

@@ -30,6 +30,7 @@ header {
   }
 
   nav a {
+    position: relative;
     color: var(--text-on-dark);
     text-decoration: none;
     font-size: large;
@@ -40,5 +41,18 @@ header {
 
   nav a.active {
     color: var(--secondary-color);
+  }
+
+  .cart {
+    position: absolute;
+    background-color: var(--warn-color);
+    color: white;
+    text-align: center;
+    border-radius: 1000px;
+    font-size: small;
+    width: 17px;
+    height: 17px;
+    right: -10px;
+    top: -10px;
   }
 }
