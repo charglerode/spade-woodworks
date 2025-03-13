@@ -1,103 +1,113 @@
-<section class="contact">
-  <h1>Contact Us</h1>
-  <p *ngIf="message.length === 0 && error.length === 0" class="feedback">
-    Let us know if you have any questions, technical issues, need support for
-    products you've already purchased, want a quote on a custom piece of
-    furniture, or anything else. We're anxious to hear from you.
-  </p>
-  <p *ngIf="error.length > 0" class="feedback error">{{ error }}</p>
-  <p *ngIf="message.length > 0" class="feedback">{{ message }}</p>
-  <form
-    class="contact"
-    [formGroup]="contactForm"
-    *ngIf="message.length === 0 && error.length === 0"
-    (ngSubmit)="onSubmit()"
-  >
-    <div class="form-group">
-      <input type="text" id="name" formControlName="name" placeholder="Name" />
-      <label for="name">Name</label>
-      <div
-        class="error"
-        *ngIf="
-          contactForm.get('name')?.invalid && contactForm.get('name')?.touched
-        "
-      >
-        <small *ngIf="contactForm.get('name')?.errors?.['required']">
-          Name is required.
-        </small>
-        <small *ngIf="contactForm.get('name')?.errors?.['pattern']">
-          Name must have at least 2 letters and can only include letters,
-          hyphens, and apostrophes.
-        </small>
+<section>
+  <div class="root">
+    <h1>Contact Us</h1>
+    <p *ngIf="message.length === 0 && error.length === 0" class="feedback">
+      Let us know if you have any questions, technical issues, need support for
+      products you've already purchased, want a quote on a custom piece of
+      furniture, or anything else. We're anxious to hear from you.
+    </p>
+    <p *ngIf="error.length > 0" class="feedback error">{{ error }}</p>
+    <p *ngIf="message.length > 0" class="feedback">{{ message }}</p>
+    <form
+      class="contact"
+      [formGroup]="contactForm"
+      *ngIf="message.length === 0 && error.length === 0"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form-group">
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Name"
+        />
+        <label for="name">Name</label>
+        <div
+          class="error"
+          *ngIf="
+            contactForm.get('name')?.invalid && contactForm.get('name')?.touched
+          "
+        >
+          <small *ngIf="contactForm.get('name')?.errors?.['required']">
+            Name is required.
+          </small>
+          <small *ngIf="contactForm.get('name')?.errors?.['pattern']">
+            Name must have at least 2 letters and can only include letters,
+            hyphens, and apostrophes.
+          </small>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        placeholder="Email"
-      />
-      <label for="email">Email</label>
-      <div
-        class="error"
-        *ngIf="
-          contactForm.get('email')?.invalid && contactForm.get('email')?.touched
-        "
-      >
-        <small *ngIf="contactForm.get('email')?.errors?.['required']">
-          Email is required.
-        </small>
-        <small *ngIf="contactForm.get('email')?.errors?.['email']">
-          Please enter a valid email address.
-        </small>
+      <div class="form-group">
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <label for="email">Email</label>
+        <div
+          class="error"
+          *ngIf="
+            contactForm.get('email')?.invalid &&
+            contactForm.get('email')?.touched
+          "
+        >
+          <small *ngIf="contactForm.get('email')?.errors?.['required']">
+            Email is required.
+          </small>
+          <small *ngIf="contactForm.get('email')?.errors?.['email']">
+            Please enter a valid email address.
+          </small>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <select
-        id="reason"
-        required
-        formControlName="reason"
-        name="reason"
-        placeholder="Reason"
-      >
-        <option value="" selected>Choose One:</option>
-        <option value="Quote">Quote</option>
-        <option value="Products">Product Inquiry</option>
-        <option value="Support">Customer Support</option>
-        <option value="Technical">Technical Issue</option>
-        <option value="Other">Other</option>
-      </select>
-      <label for="email">Reason</label>
-      <div class="error" *ngIf="contactForm.get('reason')?.invalid">
-        <small *ngIf="contactForm.get('reason')?.errors?.['required']">
-          Reason is required.
-        </small>
+      <div class="form-group">
+        <select
+          id="reason"
+          required
+          formControlName="reason"
+          name="reason"
+          placeholder="Reason"
+        >
+          <option value="" selected>Choose One:</option>
+          <option value="Quote">Quote</option>
+          <option value="Products">Product Inquiry</option>
+          <option value="Support">Customer Support</option>
+          <option value="Technical">Technical Issue</option>
+          <option value="Other">Other</option>
+        </select>
+        <label for="email">Reason</label>
+        <div class="error" *ngIf="contactForm.get('reason')?.invalid">
+          <small *ngIf="contactForm.get('reason')?.errors?.['required']">
+            Reason is required.
+          </small>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <textarea
-        id="message"
-        formControlName="message"
-        placeholder="Message"
-        rows="7"
-      ></textarea>
-      <label for="message">Message</label>
-      <div
-        class="error"
-        *ngIf="
-          contactForm.get('message')?.invalid &&
-          contactForm.get('message')?.touched
-        "
-      >
-        <small *ngIf="contactForm.get('message')?.errors?.['required']">
-          Message is required.
-        </small>
-        <small *ngIf="contactForm.get('message')?.errors?.['minlength']">
-          Message must be at least 10 characters long.
-        </small>
+      <div class="form-group">
+        <textarea
+          id="message"
+          formControlName="message"
+          placeholder="Message"
+          rows="7"
+        ></textarea>
+        <label for="message">Message</label>
+        <div
+          class="error"
+          *ngIf="
+            contactForm.get('message')?.invalid &&
+            contactForm.get('message')?.touched
+          "
+        >
+          <small *ngIf="contactForm.get('message')?.errors?.['required']">
+            Message is required.
+          </small>
+          <small *ngIf="contactForm.get('message')?.errors?.['minlength']">
+            Message must be at least 10 characters long.
+          </small>
+        </div>
       </div>
-    </div>
-    <button type="submit" [disabled]="contactForm.invalid">Send Message</button>
-  </form>
+      <button type="submit" [disabled]="contactForm.invalid">
+        Send Message
+      </button>
+    </form>
+  </div>
 </section>

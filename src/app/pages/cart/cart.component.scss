@@ -1,66 +1,108 @@
 .cart {
+  margin: 50px 0;
+  max-width: 960px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
+  justify-content: center;
+  gap: 50px;
 }
 
 h1 {
   text-align: center;
 }
 
-table {
-  margin-bottom: 50px;
-  width: 100%;
-}
-
-td {
-  vertical-align: top;
-}
-
-.image {
-  width: 150px;
-  padding-right: 20px;
-}
-
 h3 {
   margin-top: 0;
 }
 
+.cart-item {
+  display: grid;
+  row-gap: 10px;
+  column-gap: 10px;
+  grid-template-columns: auto 100px;
+  grid-template-areas:
+    'details price'
+    'details quantity'
+    'details delete'
+    'details .';
+}
+
+.image {
+  display: none;
+}
+
 .details {
-  margin-bottom: 50px;
+  grid-area: details;
 }
 
 .form-group {
-  margin-top: 0;
+  grid-area: quantity;
 }
 
 .price {
+  grid-area: price;
   text-align: right;
-  padding-top: 10px;
   p {
     font-weight: bold;
+    font-size: 20px;
   }
 }
 
+.delete {
+  grid-area: delete;
+}
+
 .tally {
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}
+
+.titles,
+.values {
   text-align: right;
 }
 
 .total {
-  text-align: right;
-  font-weight: bold;
   padding-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.delete {
-  text-align: end;
+@media all and (min-width: 700px) {
+  .image {
+    display: block;
+  }
+  .price {
+    grid-row: 1;
+  }
+  .image {
+    grid-row: span 2;
+  }
+  .cart-item {
+    border: 1px solid var(--primary-light);
+    border-radius: var(--radius);
+    padding: 20px;
+    column-gap: 20px;
+    grid-template-columns: 150px auto 100px;
+    grid-template-areas:
+      'image details price'
+      'image details quantity'
+      '. details delete'
+      '. details .';
+  }
 }
 
-.spacer-top {
-  padding-top: 50px;
-}
-
-.checkout {
-  width: 25%;
+@media all and (min-width: 1024px) {
+  .image {
+    display: block;
+  }
+  .cart-item {
+    border: 1px solid var(--primary-light);
+    border-radius: var(--radius);
+    padding: 20px;
+    column-gap: 20px;
+    grid-template-columns: 150px auto 100px 100px 100px;
+    grid-template-areas: 'image details quantity price delete';
+  }
 }

@@ -1,15 +1,19 @@
-<section class="gallery">
-  <h1>Showcase Gallery</h1>
-  <p *ngIf="error.length > 0">{{ error }}</p>
-  <a
-    *ngFor="let piece of gallery"
-    [routerLink]="['/gallery/', piece._id]"
-    class="block"
-  >
-    <img src="img/uploads/{{ piece.cover }}" width="450" height="300" />
-    <div class="description">
-      <h3>{{ piece.name }}</h3>
-      <p>{{ piece.teaser }}</p>
+<section>
+  <div class="root">
+    <h1>Showcase Gallery</h1>
+    <p *ngIf="error.length > 0">{{ error }}</p>
+    <div class="container">
+      <a
+        *ngFor="let piece of gallery"
+        [routerLink]="['/gallery/', piece._id]"
+        class="block"
+      >
+        <img src="img/uploads/{{ piece.cover }}" />
+        <div class="description">
+          <h3>{{ piece.name }}</h3>
+          <p>{{ piece.teaser }}</p>
+        </div>
+      </a>
     </div>
-  </a>
+  </div>
 </section>

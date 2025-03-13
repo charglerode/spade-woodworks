@@ -1,51 +1,56 @@
-<section class="products">
-  <h1>Our Products</h1>
-  <p *ngIf="error.length > 0">{{ error }}</p>
-  <div class="form-group sorting">
-    <select id="sort-select" (change)="onSortChange($event)">
-      <option value="priceAsc" [selected]="selectedSort === 'priceAsc'">
-        Price: Low to High
-      </option>
-      <option value="priceDesc" [selected]="selectedSort === 'priceDesc'">
-        Price: High to Low
-      </option>
-      <option value="availability" [selected]="selectedSort === 'availability'">
-        Availability: In Stock Only
-      </option>
-    </select>
-    <label for="sort-select">Sort by</label>
-  </div>
-
-  <ng-container *ngFor="let category of categories">
-    <h2 class="category">{{ category }}</h2>
-    <div
-      class="item-list"
-      *ngIf="
-        groupedProducts[category] && groupedProducts[category].length > 0;
-        else noProducts
-      "
-    >
-      <div
-        class="card"
-        *ngFor="let product of groupedProducts[category]"
-        [routerLink]="['/products', product._id]"
-      >
-        <div class="header">
-          <img src="img/uploads/{{ product.images[0] }}" width="300" />
-        </div>
-        <div class="content">
-          <h3>{{ product.name }}</h3>
-          <div *ngIf="product.available; else outOfStock">
-            <p class="price">{{ product.price | currency }}</p>
-          </div>
-        </div>
-        <ng-template #outOfStock
-          ><p class="unavailable">Out of Stock</p></ng-template
+<section>
+  <div class="root">
+    <h1>Our Products</h1>
+    <p *ngIf="error.length > 0">{{ error }}</p>
+    <div class="form-group sorting">
+      <select id="sort-select" (change)="onSortChange($event)">
+        <option value="priceAsc" [selected]="selectedSort === 'priceAsc'">
+          Price: Low to High
+        </option>
+        <option value="priceDesc" [selected]="selectedSort === 'priceDesc'">
+          Price: High to Low
+        </option>
+        <option
+          value="availability"
+          [selected]="selectedSort === 'availability'"
         >
-      </div>
+          Availability: In Stock Only
+        </option>
+      </select>
+      <label for="sort-select">Sort by</label>
     </div>
-    <ng-template #noProducts>
-      <p class="no-products">No Products Available</p>
-    </ng-template>
-  </ng-container>
+
+    <ng-container *ngFor="let category of categories">
+      <h2 class="category">{{ category }}</h2>
+      <div
+        class="item-list"
+        *ngIf="
+          groupedProducts[category] && groupedProducts[category].length > 0;
+          else noProducts
+        "
+      >
+        <div
+          class="card"
+          *ngFor="let product of groupedProducts[category]"
+          [routerLink]="['/products', product._id]"
+        >
+          <div class="header">
+            <img src="img/uploads/{{ product.images[0] }}" width="300" />
+          </div>
+          <div class="content">
+            <h3>{{ product.name }}</h3>
+            <div *ngIf="product.available; else outOfStock">
+              <p class="price">{{ product.price | currency }}</p>
+            </div>
+          </div>
+          <ng-template #outOfStock
+            ><p class="unavailable">Out of Stock</p></ng-template
+          >
+        </div>
+      </div>
+      <ng-template #noProducts>
+        <p class="no-products">No Products Available</p>
+      </ng-template>
+    </ng-container>
+  </div>
 </section>

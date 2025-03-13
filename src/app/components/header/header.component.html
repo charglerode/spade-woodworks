@@ -1,16 +1,43 @@
 <header>
-  <div class="logo">
-    <a routerLink="/"><img src="img/logo.png" height="60px" /></a>
-    <h2>Spade Woodworks</h2>
-  </div>
   <nav>
-    <a routerLink="/products" routerLinkActive="active">products</a>
-    <a routerLink="/gallery" routerLinkActive="active">gallery</a>
-    <a routerLink="/commissions" routerLinkActive="active">commissions</a>
-    <a routerLink="/contact" routerLinkActive="active">contact</a>
-    <a routerLink="/shopping-cart"
-      ><i class="fa-solid fa-cart-shopping"></i>
-      <p class="cart" *ngIf="itemsInCart > 0">{{ itemsInCart }}</p></a
-    >
+    <ul #menu class="menu">
+      <li class="logo">
+        <a routerLink="/">
+          <img src="img/logo.png" height="60px" />
+          <h2>Spade Woodworks</h2>
+        </a>
+      </li>
+      <li class="item">
+        <a (click)="menuSelected('/products')" routerLinkActive="active">
+          products
+        </a>
+      </li>
+      <li class="item">
+        <a (click)="menuSelected('/gallery')" routerLinkActive="active">
+          gallery
+        </a>
+      </li>
+      <li class="item">
+        <a (click)="menuSelected('/commissions')" routerLinkActive="active">
+          commissions
+        </a>
+      </li>
+      <li class="item">
+        <a (click)="menuSelected('/contact')" routerLinkActive="active">
+          contact
+        </a>
+      </li>
+      <li class="item">
+        <a (click)="menuSelected('/shopping-cart')">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <p class="cart" *ngIf="itemsInCart > 0">{{ itemsInCart }}</p>
+        </a>
+      </li>
+      <li class="toggle">
+        <a #icon (click)="toggleMenu()">
+          <i class="fa-solid fa-bars"></i>
+        </a>
+      </li>
+    </ul>
   </nav>
 </header>

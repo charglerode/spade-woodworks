@@ -1,39 +1,41 @@
 <section>
-  <button routerLink="/products">Back to Products</button>
-  <p *ngIf="error.length > 0">{{ error }}</p>
-  <div class="details" *ngIf="product; else notFound">
-    <slideshow [images]="product.images"></slideshow>
-    <div class="header">
-      <h2>{{ product.name }}</h2>
-      <p class="price">{{ getTotalPrice() | currency }}</p>
-    </div>
-    <p *ngIf="product.description">{{ product.description }}</p>
-    <div class="options">
-      <div class="group" *ngFor="let option of product.options">
-        <h3>{{ option.name }}</h3>
-        <div class="items">
-          <div
-            class="item"
-            *ngFor="let item of option.items; index as i"
-            [class.selected]="isSelected(option.name, i)"
-            (click)="onOptionSelected(option.name, i)"
-          >
-            <div class="content">
-              <p>{{ item.name }}</p>
-              <p class="price" *ngIf="item.price !== 0">
-                +{{ getAdjustedPrice(item.price, item.fixed) | currency }}
-              </p>
+  <div class="root">
+    <button routerLink="/products">Back to Products</button>
+    <p *ngIf="error.length > 0">{{ error }}</p>
+    <div class="details" *ngIf="product; else notFound">
+      <slideshow [images]="product.images"></slideshow>
+      <div class="header">
+        <h2>{{ product.name }}</h2>
+        <p class="price">{{ getTotalPrice() | currency }}</p>
+      </div>
+      <p *ngIf="product.description">{{ product.description }}</p>
+      <div class="options">
+        <div class="group" *ngFor="let option of product.options">
+          <h3>{{ option.name }}</h3>
+          <div class="items">
+            <div
+              class="item"
+              *ngFor="let item of option.items; index as i"
+              [class.selected]="isSelected(option.name, i)"
+              (click)="onOptionSelected(option.name, i)"
+            >
+              <div class="content">
+                <p>{{ item.name }}</p>
+                <p class="price" *ngIf="item.price !== 0">
+                  +{{ getAdjustedPrice(item.price, item.fixed) | currency }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="actions">
+        <button [disabled]="!product.available" (click)="onAddToCart(product)">
+          <span *ngIf="product.available; else outOfStock">Add to Cart</span>
+        </button>
+      </div>
+      <ng-template #outOfStock>Out of Stock</ng-template>
     </div>
-    <div class="actions">
-      <button [disabled]="!product.available" (click)="onAddToCart(product)">
-        <span *ngIf="product.available; else outOfStock">Add to Cart</span>
-      </button>
-    </div>
-    <ng-template #outOfStock>Out of Stock</ng-template>
   </div>
 </section>
 <ng-template #notFound>

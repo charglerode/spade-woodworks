@@ -36,10 +36,12 @@ p {
   color: var(--text-on-light);
   margin: 0;
   padding: 0;
+  font-size: 18px;
 }
 
 body {
   background-color: var(--background-light);
+  margin: 0;
 }
 
 h1 {
@@ -60,9 +62,15 @@ h6 {
 }
 
 section {
+  box-sizing: border-box;
   width: 100%;
-  max-width: 960px;
-  margin: 50px auto 100px auto;
+  // max-width: 960px;
+  // margin: 50px auto 100px auto;
+}
+
+.root {
+  margin: 20px auto 50px auto;
+  padding: 0 50px;
 }
 
 // BUTTONS
@@ -242,7 +250,7 @@ select:focus {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   gap: 20px;
 }
@@ -270,13 +278,25 @@ select:focus {
   }
   .price,
   .unavailable {
-    font-size: xx-large;
+    font-size: 30px;
     text-align: center;
     background-color: var(--primary-light);
   }
   .price {
     color: var(--secondary-color);
     font-weight: bold;
-    font-size: xx-large;
+    font-size: 30px;
+  }
+}
+
+@media all and (min-width: 700px) {
+  .item-list {
+    justify-content: start;
+  }
+}
+
+@media all and (min-width: 1024px) {
+  .root {
+    max-width: 960px;
   }
 }

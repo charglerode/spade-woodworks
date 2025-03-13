@@ -1,9 +1,24 @@
+.root {
+  max-width: 960px;
+}
+
 h1 {
   text-align: center;
   margin-bottom: 25px;
 }
 
 p {
-  font-size: large;
   margin-bottom: 50px;
+}
+
+@media all and (min-width: 700px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media all and (min-width: 1024px) {
+  .container {
+    max-width: 960px;
+  }
 }
