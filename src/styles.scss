@@ -1,4 +1,4 @@
-// Theme Variables
+// VARS
 :root {
   --primary-color: #262022;
   --primary-dark: color-mix(in oklab, var(--primary-color), black 10%);
@@ -69,7 +69,7 @@ section {
 }
 
 .root {
-  margin: 20px auto 50px auto;
+  margin: 25px auto 50px auto;
   padding: 0 50px;
 }
 
@@ -101,12 +101,6 @@ form {
   flex-direction: column;
   gap: 10px;
   align-items: center;
-
-  .error {
-    color: var(--warn-color);
-    font-size: 0.85em;
-    margin-top: 5px;
-  }
 }
 
 .error {
@@ -242,10 +236,11 @@ select:focus {
   position: relative !important;
 }
 
-// PRODUCTS / INVENTORY
+// PRODUCTS
 .category {
   padding-top: 20px;
 }
+
 .item-list {
   display: flex;
   flex-wrap: wrap;
@@ -255,7 +250,6 @@ select:focus {
   gap: 20px;
 }
 
-// PRODUCT CARD
 .card {
   background-color: var(--primary-light);
   padding: 0;
@@ -289,6 +283,18 @@ select:focus {
   }
 }
 
+// GALLERY
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 25px auto;
+}
+
+// RESPONSIVE
 @media all and (min-width: 700px) {
   .item-list {
     justify-content: start;

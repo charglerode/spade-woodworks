@@ -1,39 +1,41 @@
 <section>
-  <form [formGroup]="forgotForm" (ngSubmit)="onSubmit()">
-    <div class="form-row" *ngIf="error.length > 0">
-      <p class="error">{{ error }}</p>
-    </div>
-    <div class="form-row" *ngIf="message.length > 0">
-      <p>{{ message }}</p>
-    </div>
-    <div class="form-group">
-      <input
-        type="text"
-        id="email"
-        formControlName="email"
-        placeholder="Email"
-      />
-      <label for="name">Email</label>
-      <div
-        class="error"
-        *ngIf="
-          forgotForm.get('email')?.invalid && forgotForm.get('email')?.touched
-        "
-      >
-        <small *ngIf="forgotForm.get('email')?.errors?.['required']">
-          Email is required.
-        </small>
-        <small
+  <div class="root">
+    <form [formGroup]="forgotForm" (ngSubmit)="onSubmit()">
+      <div class="form-row" *ngIf="error.length > 0">
+        <p class="error">{{ error }}</p>
+      </div>
+      <div class="form-row" *ngIf="message.length > 0">
+        <p>{{ message }}</p>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          id="email"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <label for="name">Email</label>
+        <div
+          class="error"
           *ngIf="
-            forgotForm.get('name')?.errors && forgotForm.get('email')?.touched
+            forgotForm.get('email')?.invalid && forgotForm.get('email')?.touched
           "
         >
-          Must be a valid email address.
-        </small>
+          <small *ngIf="forgotForm.get('email')?.errors?.['required']">
+            Email is required.
+          </small>
+          <small
+            *ngIf="
+              forgotForm.get('name')?.errors && forgotForm.get('email')?.touched
+            "
+          >
+            Must be a valid email address.
+          </small>
+        </div>
       </div>
-    </div>
-    <button type="submit" [disabled]="forgotForm.invalid">
-      Reset Password
-    </button>
-  </form>
+      <button type="submit" [disabled]="forgotForm.invalid">
+        Reset Password
+      </button>
+    </form>
+  </div>
 </section>

@@ -36,7 +36,7 @@ export class LoginComponent {
         next: (res) => {
           if (res.status === 'success') {
             localStorage.setItem('jwt', res.token);
-            this.router.navigate(['/inventory']);
+            this.router.navigate(['/admin']);
           }
         },
         error: (err) => {

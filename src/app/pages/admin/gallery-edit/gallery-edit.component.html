@@ -1,0 +1,112 @@
+<section>
+  <div class="root">
+    <button routerLink="/admin">Back to Admin</button>
+    <div class="results">
+      <p>{{ message }}</p>
+      <p class="error">{{ error }}</p>
+    </div>
+    <form
+      *ngIf="message === '' && error === ''"
+      [formGroup]="galleryForm"
+      enctype="multipart/form-data"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="images">
+        <img
+          *ngFor="let image of images"
+          src="img/uploads/{{ image }}"
+          height="96"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          #fileInput
+          type="file"
+          id="images"
+          formArrayName="images"
+          multiple
+          accept="image/*"
+          (change)="onImageChange()"
+        />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="Name"
+          />
+          <label for="name">Name</label>
+          <div
+            class="error"
+            *ngIf="
+              galleryForm.get('name')?.invalid &&
+              galleryForm.get('name')?.touched
+            "
+          >
+            <small *ngIf="galleryForm.get('name')?.errors?.['required']">
+              Name is required.
+            </small>
+            <small *ngIf="galleryForm.get('name')?.errors?.['pattern']">
+              Name must have at least 2 letters and can only include letters,
+              hyphens, and apostrophes.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <textarea
+          id="teaser"
+          formControlName="teaser"
+          placeholder="Teaser"
+          rows="3"
+        ></textarea>
+        <label for="teaser">Teaser</label>
+        <div
+          class="error"
+          *ngIf="
+            galleryForm.get('teaser')?.invalid &&
+            galleryForm.get('teaser')?.touched
+          "
+        >
+          <small *ngIf="galleryForm.get('teaser')?.errors?.['required']">
+            Teaser is required.
+          </small>
+          <small *ngIf="galleryForm.get('teaser')?.errors?.['pattern']">
+            Teaser must be defined
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Description"
+          rows="7"
+        ></textarea>
+        <label for="description">Description</label>
+        <div
+          class="error"
+          *ngIf="
+            galleryForm.get('description')?.invalid &&
+            galleryForm.get('description')?.touched
+          "
+        >
+          <small *ngIf="galleryForm.get('description')?.errors?.['required']">
+            Description is required.
+          </small>
+          <small *ngIf="galleryForm.get('description')?.errors?.['pattern']">
+            Description must be defined
+          </small>
+        </div>
+      </div>
+      <button *ngIf="!piece" type="submit" [disabled]="galleryForm.invalid">
+        Add Gallery Piece
+      </button>
+      <button *ngIf="piece" type="submit">Update Gallery Piece</button>
+    </form>
+  </div>
+</section>

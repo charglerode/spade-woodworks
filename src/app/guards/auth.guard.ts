@@ -6,8 +6,10 @@ import {
   MaybeAsync,
   Router,
   RouterStateSnapshot,
+  UrlTree,
 } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +23,17 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-  ): MaybeAsync<GuardResult> {
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
     if (this.service.isAuthenticated()) {
       return true;
     } else {
-      this.router.navigate(['/login']);
-      return false;
+      return this.router.createUrlTree(['/login']);
+      // this.router.navigate(['/login']);
+      // return false;
     }
   }
 }

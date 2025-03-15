@@ -13,9 +13,9 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { ForgotComponent } from './pages/auth/forgot/forgot.component';
 import { ResetComponent } from './pages/auth/reset/reset.component';
 import { AdminComponent } from './pages/admin/admin.component';
-import { ProductEditComponent } from './pages/products/product-edit/product-edit.component';
+import { ProductEditComponent } from './pages/admin/product-edit/product-edit.component';
 import { GalleryDetailsComponent } from './pages/gallery/gallery-details/gallery-details.component';
-import { GalleryEditComponent } from './pages/gallery/gallery-edit/gallery-edit.component';
+import { GalleryEditComponent } from './pages/admin/gallery-edit/gallery-edit.component';
 import { CartComponent } from './pages/cart/cart.component';
 
 export const routes: Routes = [

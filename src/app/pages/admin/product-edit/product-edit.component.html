@@ -1,0 +1,280 @@
+<section>
+  <div class="root">
+    <button routerLink="/admin">Back to Admin</button>
+    <div class="results">
+      <p>{{ message }}</p>
+      <p class="error">{{ error }}</p>
+    </div>
+    <form
+      *ngIf="message === '' && error === ''"
+      [formGroup]="productForm"
+      enctype="multipart/form-data"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="images">
+        <input
+          #fileInput
+          type="file"
+          id="file-select"
+          class="file-select"
+          formArrayName="images"
+          multiple
+          accept="image/*"
+          (change)="onImageChange()"
+        />
+        <label class="file-label" for="file-select"
+          ><i class="fa-solid fa-arrow-up-from-bracket"></i
+        ></label>
+        <img
+          *ngFor="let image of product?.images"
+          src="img/uploads/{{ image }}"
+          height="96"
+        />
+        <img *ngFor="let image of images" [src]="image" height="96" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group input-lg">
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="Name"
+          />
+          <label for="name">Name</label>
+          <div
+            class="error"
+            *ngIf="
+              productForm.get('name')?.invalid &&
+              productForm.get('name')?.touched
+            "
+          >
+            <small *ngIf="productForm.get('name')?.errors?.['required']">
+              Name is required.
+            </small>
+            <small *ngIf="productForm.get('name')?.errors?.['pattern']">
+              Name must have at least 2 letters and can only include letters,
+              hyphens, and apostrophes.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group input-md">
+          <input
+            type="number"
+            id="price"
+            formControlName="price"
+            placeholder="Price"
+          />
+          <label for="price">Price</label>
+          <div
+            class="error"
+            *ngIf="
+              productForm.get('price')?.invalid &&
+              productForm.get('price')?.touched
+            "
+          >
+            <small *ngIf="productForm.get('price')?.errors?.['required']">
+              Price is required.
+            </small>
+            <small *ngIf="productForm.get('price')?.errors?.['pattern']">
+              Price must be defined
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group input-sm available">
+          <input
+            type="checkbox"
+            id="available"
+            formControlName="available"
+            placeholder="Available"
+          />
+          <label class="label" type="checkbox" for="available">Available</label>
+          <div
+            class="error"
+            *ngIf="
+              productForm.get('available')?.invalid &&
+              productForm.get('available')?.touched
+            "
+          >
+            <small *ngIf="productForm.get('available')?.errors?.['required']">
+              Price is required.
+            </small>
+            <small *ngIf="productForm.get('available')?.errors?.['pattern']">
+              Price must be defined
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group input-sm featured">
+          <input
+            type="checkbox"
+            id="featured"
+            formControlName="featured"
+            placeholder="Featured"
+          />
+          <label class="label" type="checkbox" for="featured">Featured</label>
+          <div
+            class="error"
+            *ngIf="
+              productForm.get('available')?.invalid &&
+              productForm.get('available')?.touched
+            "
+          >
+            <small *ngIf="productForm.get('featured')?.errors?.['pattern']">
+              Price must be defined
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <select
+          id="category"
+          required
+          formControlName="category"
+          name="category"
+          placeholder="Category"
+        >
+          <option value="" selected>Choose One:</option>
+          <option value="Wood Care">Wood Care</option>
+          <option value="Crafts">Crafts</option>
+          <option value="Furniture">Furniture</option>
+        </select>
+        <label for="category">Category</label>
+        <div
+          class="error"
+          *ngIf="
+            productForm.get('category')?.invalid &&
+            productForm.get('category')?.touched
+          "
+        >
+          <small *ngIf="productForm.get('category')?.errors?.['required']">
+            Category is required.
+          </small>
+          <small *ngIf="productForm.get('category')?.errors?.['pattern']">
+            Category must be defined
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Description"
+          rows="7"
+        ></textarea>
+        <label for="description">Description</label>
+        <div
+          class="error"
+          *ngIf="
+            productForm.get('description')?.invalid &&
+            productForm.get('description')?.touched
+          "
+        >
+          <small *ngIf="productForm.get('description')?.errors?.['required']">
+            Description is required.
+          </small>
+          <small *ngIf="productForm.get('description')?.errors?.['pattern']">
+            Description must be defined
+          </small>
+        </div>
+      </div>
+
+      <h3>Options</h3>
+      <button type="button" (click)="addGroup()">
+        <i class="fa-solid fa-plus"></i> Add Group
+      </button>
+      <div formArrayName="options">
+        <div
+          class="option-card"
+          *ngFor="let group of options.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <input
+                id="group-name"
+                type="text"
+                formControlName="name"
+                placeholder="Group Name"
+              />
+              <label for="group-name">Group Name</label>
+            </div>
+            <button class="delete" (click)="removeGroup(i)">
+              <i class="fa-solid fa-x"></i>
+            </button>
+          </div>
+
+          <div formArrayName="items">
+            <div
+              class="form-row"
+              *ngFor="let item of getItems(i).controls; let j = index"
+              [formGroupName]="j"
+            >
+              <div class="form-row">
+                <div class="form-group input-lg">
+                  <input
+                    id="item-name"
+                    type="text"
+                    formControlName="name"
+                    placeholder="Item Name"
+                  />
+                  <label for="item-name">Name</label>
+                </div>
+                <div class="form-group input-sm">
+                  <input
+                    id="item-price"
+                    type="number"
+                    formControlName="price"
+                    placeholder="Price"
+                  />
+                  <label for="item-price">Price</label>
+                </div>
+                <div class="form-group input-sm">
+                  <input
+                    id="multiplier"
+                    type="number"
+                    formControlName="multiplier"
+                    placeholder="Multiplier"
+                  />
+                  <label for="multiplier">Multiplier</label>
+                </div>
+                <div class="form-group input-sm fixed">
+                  <input
+                    id="item-fixed"
+                    type="checkbox"
+                    formControlName="fixed"
+                  />
+                  Fixed
+                </div>
+                <div class="form-group input-sm default">
+                  <input
+                    id="item-default"
+                    type="checkbox"
+                    formControlName="default"
+                  />
+                  Default
+                </div>
+              </div>
+
+              <button class="delete" type="button" (click)="removeItem(i, j)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+          <button class="align" type="button" (click)="addItem(i)">
+            <i class="fa-solid fa-plus"></i> Add Item
+          </button>
+        </div>
+      </div>
+
+      <button *ngIf="!product" type="submit" [disabled]="productForm.invalid">
+        Add Item
+      </button>
+      <button *ngIf="product" type="submit">Update Item</button>
+    </form>
+  </div>
+</section>
