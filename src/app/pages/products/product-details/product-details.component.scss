@@ -15,6 +15,7 @@
     font-weight: bolder;
   }
 }
+
 .actions {
   margin-top: 50px;
   display: flex;
@@ -25,8 +26,12 @@
   }
 }
 
-p {
-  margin: 10px 0;
+.description {
+  white-space: pre-wrap;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .options {
@@ -69,7 +74,7 @@ p {
   gap: 10px;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 
 .price {

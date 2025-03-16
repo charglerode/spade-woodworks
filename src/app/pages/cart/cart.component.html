@@ -4,8 +4,7 @@
     <div class="cart" *ngIf="cartItems.length > 0; else emptyCart">
       <div class="cart-item" *ngFor="let item of cartItems">
         <div class="image">
-          <!-- <img class="image" src="img/uploads/{{ item.image }}" /> -->
-          <img src="https://placehold.co/150x100" />
+          <img class="image" src="img/uploads/{{ item.image }}" />
         </div>
         <div class="details">
           <h3>{{ item.name }}</h3>
@@ -24,7 +23,7 @@
           <label for="quantity">Quantity</label>
         </div>
         <div class="price">
-          <p>{{ item.price | currency }}</p>
+          <p>{{ item.price * item.quantity | currency }}</p>
         </div>
         <div class="delete">
           <button (click)="removeItem(item)">Remove</button>

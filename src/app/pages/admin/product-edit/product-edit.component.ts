@@ -11,6 +11,7 @@ import { Product, ProductItem } from '../../../models/product.model';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DecodePipe } from '../../../pipes/decode.pipe';
 
 @Component({
   selector: 'app-product-edit',
@@ -38,6 +39,7 @@ export class ProductEditComponent {
     private router: Router,
     private fb: FormBuilder,
     private service: ProductService,
+    private decode: DecodePipe,
   ) {
     this.productForm = this.fb.group({
       name: [
@@ -64,7 +66,7 @@ export class ProductEditComponent {
           price: this.product?.price,
           available: this.product?.available,
           category: this.product?.category,
-          description: this.product?.description,
+          description: decodeURIComponent(this.product?.description!),
           featured: this.product?.featured,
         });
         this.setProductOptions(this.product?.options || []);
@@ -171,7 +173,10 @@ export class ProductEditComponent {
     formData.append('price', form.get('price')?.value);
     formData.append('available', form.get('available')?.value);
     formData.append('category', form.get('category')?.value);
-    formData.append('description', form.get('description')?.value);
+    formData.append(
+      'description',
+      encodeURIComponent(form.get('description')?.value),
+    );
     formData.append('featured', form.get('featured')?.value);
     if (this.files) {
       for (let i = 0; i < this.files.length; i++) {

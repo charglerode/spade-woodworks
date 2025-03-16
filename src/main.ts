@@ -12,6 +12,7 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { AuthInterceptor } from './app/interceptors/auth.interceptor';
+import { DecodePipe } from './app/pipes/decode.pipe';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -21,5 +22,6 @@ bootstrapApplication(AppComponent, {
     ),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    DecodePipe,
   ],
 }).catch((err) => console.error(err));

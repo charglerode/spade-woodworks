@@ -8,7 +8,11 @@
         <h2>{{ product.name }}</h2>
         <p class="price">{{ getTotalPrice() | currency }}</p>
       </div>
-      <p *ngIf="product.description">{{ product.description }}</p>
+      <div
+        class="description"
+        *ngIf="product.description"
+        [innerHtml]="product.description | decode"
+      ></div>
       <div class="options">
         <div class="group" *ngFor="let option of product.options">
           <h3>{{ option.name }}</h3>

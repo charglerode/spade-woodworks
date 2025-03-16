@@ -29,7 +29,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('jwt');
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 
   forgotPassword(credentials: { email: string }): Observable<any> {

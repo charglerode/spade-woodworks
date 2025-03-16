@@ -6,11 +6,12 @@ import { RouterLink } from '@angular/router';
 import { CartItem, Product, ProductItem } from '../../../models/product.model';
 import { SlideshowComponent } from '../../../components/slideshow/slideshow.component';
 import { CartService } from '../../../services/cart.service';
+import { DecodePipe } from '../../../pipes/decode.pipe';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, RouterLink, SlideshowComponent],
+  imports: [CommonModule, RouterLink, SlideshowComponent, DecodePipe],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
