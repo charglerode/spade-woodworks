@@ -91,6 +91,10 @@ h3 {
       '. details delete'
       '. details .';
   }
+  .checkout {
+    width: 20%;
+    align-self: center;
+  }
 }
 
 @media all and (min-width: 1024px) {

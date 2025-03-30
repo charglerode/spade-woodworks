@@ -1,8 +1,8 @@
 <section>
   <div class="root">
     <h1>Shopping Cart</h1>
-    <div class="cart" *ngIf="cartItems.length > 0; else emptyCart">
-      <div class="cart-item" *ngFor="let item of cartItems">
+    <div class="cart" *ngIf="cart.items.length > 0; else emptyCart">
+      <div class="cart-item" *ngFor="let item of cart.items">
         <div class="image">
           <img class="image" src="img/uploads/{{ item.image }}" />
         </div>
@@ -43,7 +43,7 @@
           <p class="total">{{ subtotal + tax + shipping | currency }}</p>
         </div>
       </div>
-      <button class="checkout" (click)="checkout()">Checkout</button>
+      <button class="checkout" (click)="onCheckout()">Checkout</button>
     </div>
   </div>
 </section>

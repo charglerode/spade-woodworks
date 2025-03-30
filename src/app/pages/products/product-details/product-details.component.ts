@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { RouterLink } from '@angular/router';
-import { CartItem, Product, ProductItem } from '../../../models/product.model';
+import { Product, ProductItem } from '../../../models/product.model';
 import { SlideshowComponent } from '../../../components/slideshow/slideshow.component';
 import { CartService } from '../../../services/cart.service';
 import { DecodePipe } from '../../../pipes/decode.pipe';
+import { CartItem } from '../../../models/cart.model';
 
 @Component({
   selector: 'app-product-details',

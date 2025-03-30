@@ -13,6 +13,7 @@ const products = require('./routes/product.route');
 const users = require('./routes/user.route');
 const contact = require('./routes/contact.route');
 const gallery = require('./routes/gallery.route');
+const payment = require('./routes/payment.route');
 const checkout = require('./routes/checkout.route');
 
 const app = express();
@@ -48,7 +49,8 @@ app.use('/api/v1/products', products);
 app.use('/api/v1/users', users);
 app.use('/api/v1/contact', contact);
 app.use('/api/v1/gallery', gallery);
-// app.use('/api/v1/checkout', checkout);
+app.use('/api/v1/payment', payment);
+app.use('/api/v1/checkout', checkout);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl}`, 404));

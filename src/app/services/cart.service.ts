@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CartItem, Product } from '../models/product.model';
+import { CartItem } from '../models/cart.model';
 
 const KEY = 'shopping_cart';
 const EXPIRE_KEY = 'shopping_cart_expiration';

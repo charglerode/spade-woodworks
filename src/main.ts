@@ -13,6 +13,7 @@ import {
 } from '@angular/common/http';
 import { AuthInterceptor } from './app/interceptors/auth.interceptor';
 import { DecodePipe } from './app/pipes/decode.pipe';
+import { provideNgxStripe } from 'ngx-stripe';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -23,5 +24,8 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     DecodePipe,
+    provideNgxStripe(
+      'pk_test_51R0xOiCIYtvEEQ0rTSS7B9BvW8XWn9Zrq3CmIaPtF1c41QMsfcYhhXJq5XsM6wAS0gdfEitLLaqzh8GbCDENxgl900frxcyKQf',
+    ),
   ],
 }).catch((err) => console.error(err));

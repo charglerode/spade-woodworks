@@ -3,6 +3,6 @@ const controller = require('../controllers/checkout.controller');
 
 const router = express.Router();
 
-router.get('/checkout', controller.getSession);
+router.post('/create-session', controller.createSession);
 
 module.exports = router;

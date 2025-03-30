@@ -100,4 +100,10 @@
   .items {
     flex-direction: row !important;
   }
+  .actions {
+    button {
+      width: 25%;
+      align-self: center;
+    }
+  }
 }

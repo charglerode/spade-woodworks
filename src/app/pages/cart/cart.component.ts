@@ -1,31 +1,41 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CartItem } from '../../models/product.model';
-import { Subscription } from 'rxjs';
+import { Cart, CartItem } from '../../models/cart.model';
+import { Subscription, switchMap } from 'rxjs';
 import { CartService } from '../../services/cart.service';
+import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { StripeService } from 'ngx-stripe';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
 export class CartComponent implements OnInit, OnDestroy {
-  cartItems: CartItem[] = [];
+  private readonly api = '/api/v1/checkout/';
+  cart: Cart = {
+    items: [],
+  };
   cartSubscription!: Subscription;
 
-  constructor(private service: CartService) {}
+  constructor(
+    private service: CartService,
+    private stripe: StripeService,
+    private http: HttpClient,
+  ) {}
 
   ngOnInit(): void {
     this.cartSubscription = this.service.cart$.subscribe((items) => {
-      this.cartItems = items;
+      this.cart.items = items;
     });
   }
 
   get subtotal(): number {
     let amount: number = 0;
-    this.cartItems.forEach((item) => {
+    this.cart.items.forEach((item) => {
       amount += item.price * item.quantity;
     });
     return amount;
@@ -52,9 +62,19 @@ export class CartComponent implements OnInit, OnDestroy {
     this.service.removeItem(item.id, item.options);
   }
 
-  checkout() {
-    alert('Proceeding to checkout...');
-    // Future implementation: integrate with checkout flow
+  onCheckout(): void {
+    this.http
+      .post(`http://127.0.0.1:8000${this.api}create-session/`, this.cart)
+      .pipe(
+        switchMap((session: any) => {
+          return this.stripe.redirectToCheckout({ sessionId: session.id });
+        }),
+      )
+      .subscribe((result) => {
+        if (result.error) {
+          alert(result.error.message);
+        }
+      });
   }
 
   ngOnDestroy(): void {
