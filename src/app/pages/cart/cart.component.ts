@@ -7,6 +7,7 @@ import { CartService } from '../../services/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { StripeService } from 'ngx-stripe';
+import { CheckoutService } from '../../services/checkout.service';
 
 @Component({
   selector: 'app-cart',
@@ -25,6 +26,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private service: CartService,
     private stripe: StripeService,
     private http: HttpClient,
+    private checkout: CheckoutService,
   ) {}
 
   ngOnInit(): void {

@@ -13,7 +13,11 @@ exports.createSession = catchAsync(async (req, res, next) => {
         currency: 'usd',
         product_data: {
           name: item.name,
-          description: item.options.join('\n'),
+          description: item.options.join(','),
+          images: [item.image],
+          metadata: {
+            options: item.options.join(','),
+          },
         },
         unit_amount: item.price * 100,
       },
@@ -24,12 +28,27 @@ exports.createSession = catchAsync(async (req, res, next) => {
     payment_method_types: ['card'],
     line_items: items,
     mode: 'payment',
-    success_url: `http://localhost:4200/checkout`,
+    success_url: `http://localhost:4200/checkout/{CHECKOUT_SESSION_ID}`,
     cancel_url: `http://localhost:4200/shopping-cart`,
   });
 
   res.status(200).json({
     status: 'success',
     id: session.id,
+  });
+});
+
+exports.getSession = catchAsync(async (req, res, next) => {
+  const session = await stripe.checkout.sessions.retrieve(req.params.id);
+  const items = await stripe.checkout.sessions.listLineItems(req.params.id, {
+    expand: ['data.price.product'],
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      customer: session.customer_details,
+      items,
+    },
   });
 });

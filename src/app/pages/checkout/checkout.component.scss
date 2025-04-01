@@ -1,0 +1,43 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+.order {
+  margin-top: 20px;
+  width: 100%;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.block {
+  min-width: 640px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.details {
+  flex-grow: 1;
+}
+
+.quantity {
+  text-align: center;
+}
+
+.name,
+.quantity,
+.price {
+  font-weight: bold;
+}

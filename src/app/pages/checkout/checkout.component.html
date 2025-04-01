@@ -1,0 +1,29 @@
+<section>
+  <div class="root">
+    <h1 class="title">Order Placed</h1>
+    <p>
+      Thank you
+      <span class="name">{{ customer.name }}</span> for your order.
+    </p>
+    <p>We will get to work on it immediately.</p>
+    <div class="order">
+      <h4>Order Details:</h4>
+      <div class="block" *ngFor="let item of items.data">
+        <div class="image">
+          <img src="https://placehold.co/150x100" />
+        </div>
+        <div class="details">
+          <h4>{{ item.description }}</h4>
+          <p *ngFor="let option of item.price.product.description.split(',')">
+            {{ option }}
+          </p>
+        </div>
+        <div class="quantity">
+          <h4>Quantity</h4>
+          <p>{{ item.quantity }}</p>
+        </div>
+        <div class="price">{{ item.amount_total / 100 | currency }}</div>
+      </div>
+    </div>
+  </div>
+</section>

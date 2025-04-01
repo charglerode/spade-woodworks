@@ -56,7 +56,7 @@ export const routes: Routes = [
   { path: 'returns', component: ReturnsComponent },
   { path: 'shipping', component: ShippingComponent },
   { path: 'shopping-cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout/:id', component: CheckoutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot', component: ForgotComponent },
   { path: 'reset/:id', component: ResetComponent },
