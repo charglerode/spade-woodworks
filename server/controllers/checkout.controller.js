@@ -26,6 +26,9 @@ exports.createSession = catchAsync(async (req, res, next) => {
   });
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
+    shipping_address_collection: {
+      allowed_countries: ['US'],
+    },
     line_items: items,
     mode: 'payment',
     success_url: `http://localhost:4200/checkout/{CHECKOUT_SESSION_ID}`,
@@ -47,6 +50,7 @@ exports.getSession = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
+      session,
       customer: session.customer_details,
       items,
     },

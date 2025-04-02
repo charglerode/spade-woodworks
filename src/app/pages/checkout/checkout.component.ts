@@ -11,6 +11,7 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './checkout.component.scss',
 })
 export class CheckoutComponent implements OnInit {
+  session!: any;
   customer!: any;
   items!: any;
 
@@ -26,9 +27,10 @@ export class CheckoutComponent implements OnInit {
     this.service.getSession(id).subscribe({
       next: (res) => {
         if (res.status === 'success') {
+          this.session = res.data.session;
           this.customer = res.data.customer;
           this.items = res.data.items;
-          console.log(this.items[0].price.product.images[0]);
+          console.log(this.session.shipping_details.address);
         }
       },
       error: (err) => {},
