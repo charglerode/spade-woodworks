@@ -60,7 +60,9 @@
 
     <div class="container gallery" *ngIf="selected === 'gallery'">
       <div class="form-row">
-        <button (click)="onNewGalleryPiece()">New Gallery Piece</button>
+        <button (click)="onNewGalleryPiece()">
+          <i class="fa-solid fa-plus"></i>New Gallery Piece
+        </button>
       </div>
       <a
         *ngFor="let piece of gallery"
