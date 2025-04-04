@@ -147,7 +147,7 @@ form {
   width: 15%;
 }
 
-input:not([type='checkbox']),
+input:not([type='checkbox']):not([type='radio']),
 textarea,
 select {
   font-family: inherit;
@@ -176,8 +176,8 @@ select:placeholder-shown ~ label {
   top: 20px;
 }
 
-label:not([type='checkbox']),
-input:focus ~ label:not([type='checkbox']),
+label:not([type='checkbox']):not([type='radio']),
+input:focus ~ label:not([type='checkbox']):not([type='radio']),
 textarea:focus ~ label,
 select:focus ~ label {
   position: absolute;

@@ -30,6 +30,10 @@ export class ProductEditComponent {
   error = '';
   message = '';
 
+  get shipping(): FormArray {
+    return this.productForm.get('shipping') as FormArray;
+  }
+
   get options(): FormArray {
     return this.productForm.get('options') as FormArray;
   }
@@ -52,6 +56,7 @@ export class ProductEditComponent {
       description: ['', [Validators.required, Validators.minLength(10)]],
       images: this.fb.array([]),
       featured: false,
+      shipping: this.fb.array([]),
       options: this.fb.array([]),
     });
   }
@@ -69,9 +74,25 @@ export class ProductEditComponent {
           description: decodeURIComponent(this.product?.description!),
           featured: this.product?.featured,
         });
+        this.setShippingRates(this.product?.shipping || []);
         this.setProductOptions(this.product?.options || []);
       });
     }
+  }
+
+  addShippingRate(): void {
+    this.shipping.push(
+      this.fb.group({
+        display: [''],
+        minimum: [0],
+        maximum: [0],
+        cost: [0],
+      }),
+    );
+  }
+
+  removeShippingRate(index: number): void {
+    this.shipping.removeAt(index);
   }
 
   addGroup(): void {
@@ -143,6 +164,19 @@ export class ProductEditComponent {
     }
   }
 
+  private setShippingRates(rates: any[]): void {
+    rates.forEach((rate) => {
+      this.shipping.push(
+        this.fb.group({
+          display: [rate.display],
+          minimum: [rate.minimum],
+          maximum: [rate.maximum],
+          cost: [rate.cost],
+        }),
+      );
+    });
+  }
+
   private setProductOptions(options: any[]): void {
     options.forEach((group) => {
       const groupForm = this.fb.group({
@@ -183,6 +217,13 @@ export class ProductEditComponent {
         formData.append('images', this.files[i]);
       }
     }
+    this.shipping.controls.forEach((control: any, index: number) => {
+      console.log(control.value);
+      formData.append(`shipping[${index}][display]`, control.value.display);
+      formData.append(`shipping[${index}][minimum]`, control.value.minimum);
+      formData.append(`shipping[${index}][maximum]`, control.value.maximum);
+      formData.append(`shipping[${index}][cost]`, control.value.cost);
+    });
 
     this.options.controls.forEach((groupControl, groupIndex) => {
       const group = groupControl.value;
@@ -216,6 +257,6 @@ export class ProductEditComponent {
   }
 
   private handleError(err: HttpErrorResponse): void {
-    this.error = `An error occurred: ${err}`;
+    this.error = `An error occurred: ${err.message}`;
   }
 }

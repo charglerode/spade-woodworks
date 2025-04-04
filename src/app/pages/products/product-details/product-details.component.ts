@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { RouterLink } from '@angular/router';
-import { Product, ProductItem } from '../../../models/product.model';
+import {
+  Product,
+  ProductItem,
+  ShippingRate,
+} from '../../../models/product.model';
 import { SlideshowComponent } from '../../../components/slideshow/slideshow.component';
 import { CartService } from '../../../services/cart.service';
 import { DecodePipe } from '../../../pipes/decode.pipe';
@@ -109,6 +113,7 @@ export class ProductDetailsComponent implements OnInit {
       price: this.getTotalPrice(),
       image: product.images[0],
       quantity: 1,
+      shipping: product.shipping,
       options: this.parseOptions(),
     };
     this.cartService.addItem(cartItem);

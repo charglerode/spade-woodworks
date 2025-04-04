@@ -33,11 +33,33 @@ exports.createSession = catchAsync(async (req, res, next) => {
     mode: 'payment',
     success_url: `http://localhost:4200/checkout/{CHECKOUT_SESSION_ID}`,
     cancel_url: `http://localhost:4200/shopping-cart`,
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          display_name: req.body.shipping.display,
+          delivery_estimate: {
+            minimum: {
+              unit: 'business_day',
+              value: req.body.shipping.minimum,
+            },
+            maximum: {
+              unit: 'business_day',
+              value: req.body.shipping.maximum,
+            },
+          },
+          fixed_amount: {
+            amount: req.body.shipping.cost,
+            currency: 'usd',
+          },
+        },
+      },
+    ],
   });
 
   res.status(200).json({
     status: 'success',
-    id: session.id,
+    session,
   });
 });
 

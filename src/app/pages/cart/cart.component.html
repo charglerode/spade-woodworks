@@ -29,18 +29,49 @@
           <button (click)="removeItem(item)">Remove</button>
         </div>
       </div>
+
+      <div class="shipping">
+        <div class="form-group">
+          <select (change)="onShippingChange($event)" [value]="0">
+            <option
+              *ngFor="let rate of shippingRates; let i = index"
+              name="shipping"
+              id="shipping"
+              value="{{ i }}"
+            >
+              {{ rate.display }} <strong>{{ rate.cost | currency }}</strong>
+            </option>
+          </select>
+          <label for="shipping">Shipping</label>
+        </div>
+        <!-- <div class="rate" *ngFor="let rate of shippingRates; let i = index">
+          <input
+            type="radio"
+            name="shipping"
+            id="rate{{ i }}"
+            value="{{ rate.cost }}"
+            (change)="onShippingChange($event, i)"
+          />
+          <label for="rate{{ i }}"
+            >{{ rate.display }}
+            <strong>{{ rate.cost | currency }}</strong></label
+          >
+        </div> -->
+      </div>
+
       <div class="tally">
         <div class="titles">
-          <p>Subtotal</p>
-          <p>Tax</p>
+          <!-- <p>Subtotal</p> -->
+          <!-- <p>Tax</p> -->
           <p>Shipping</p>
-          <p class="total">Total</p>
+          <p class="total">Subtotal</p>
         </div>
         <div class="values">
-          <p>{{ subtotal | currency }}</p>
-          <p>{{ tax | currency }}</p>
+          <!-- <p>{{ subtotal | currency }}</p> -->
+          <!-- <p>{{ tax | currency }}</p> -->
           <p>{{ shipping | currency }}</p>
-          <p class="total">{{ subtotal + tax + shipping | currency }}</p>
+          <!-- <p class="total">{{ subtotal + tax + shipping | currency }}</p> -->
+          <p class="total">{{ subtotal + shipping | currency }}</p>
         </div>
       </div>
       <button class="checkout" (click)="onCheckout()">Checkout</button>

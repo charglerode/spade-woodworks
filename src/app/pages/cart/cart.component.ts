@@ -7,7 +7,7 @@ import { CartService } from '../../services/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { StripeService } from 'ngx-stripe';
-import { CheckoutService } from '../../services/checkout.service';
+import { ShippingRate } from '../../models/product.model';
 
 @Component({
   selector: 'app-cart',
@@ -18,22 +18,20 @@ import { CheckoutService } from '../../services/checkout.service';
 export class CartComponent implements OnInit, OnDestroy {
   private readonly api = '/api/v1/checkout/';
   cart: Cart = {
+    shipping: {
+      display: '',
+      minimum: 0,
+      maximum: 0,
+      cost: 0,
+    },
     items: [],
   };
   cartSubscription!: Subscription;
-
-  constructor(
-    private service: CartService,
-    private stripe: StripeService,
-    private http: HttpClient,
-    private checkout: CheckoutService,
-  ) {}
-
-  ngOnInit(): void {
-    this.cartSubscription = this.service.cart$.subscribe((items) => {
-      this.cart.items = items;
-    });
-  }
+  sessionId = '';
+  shippingRates: { display: string; cost: number }[] = [];
+  selectedShipping = 0;
+  shipping = 0;
+  // tax = 0;
 
   get subtotal(): number {
     let amount: number = 0;
@@ -43,12 +41,22 @@ export class CartComponent implements OnInit, OnDestroy {
     return amount;
   }
 
-  get tax(): number {
-    return 0;
+  constructor(
+    private service: CartService,
+    private stripe: StripeService,
+    private http: HttpClient,
+  ) {}
+
+  ngOnInit(): void {
+    this.cartSubscription = this.service.cart$.subscribe((items) => {
+      this.cart.items = items;
+    });
+    this.setShippingRates();
+    this.setShipping(0);
   }
 
-  get shipping(): number {
-    return 0;
+  onShippingChange(event: any): void {
+    this.setShipping(event.target.value);
   }
 
   updateQuantity(item: CartItem, event: any) {
@@ -65,11 +73,12 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onCheckout(): void {
+    this.cart.shipping.cost *= 100;
     this.http
       .post(`http://127.0.0.1:8000${this.api}create-session/`, this.cart)
       .pipe(
-        switchMap((session: any) => {
-          return this.stripe.redirectToCheckout({ sessionId: session.id });
+        switchMap((res: any) => {
+          return this.stripe.redirectToCheckout({ sessionId: res.session.id });
         }),
       )
       .subscribe((result) => {
@@ -83,5 +92,32 @@ export class CartComponent implements OnInit, OnDestroy {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();
     }
+  }
+
+  private setShippingRates(): void {
+    this.cart.items[0]?.shipping?.forEach((rate) => {
+      this.shippingRates.push({
+        display: rate.display,
+        cost: 0,
+      });
+    });
+    this.shippingRates.forEach((rate, index) => {
+      this.cart.items.forEach((item) => {
+        rate.cost += item.shipping[index].cost;
+      });
+    });
+  }
+
+  private setShipping(index: number): void {
+    this.shipping = this.cart.items.reduce(
+      (acc, item: CartItem) => acc + item.shipping[index].cost,
+      0,
+    );
+    this.cart.shipping = {
+      display: this.cart.items[0].shipping[index].display,
+      minimum: this.cart.items[0].shipping[index].minimum,
+      maximum: this.cart.items[0].shipping[index].maximum,
+      cost: this.shipping,
+    };
   }
 }

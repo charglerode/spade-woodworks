@@ -48,6 +48,10 @@ h3 {
   }
 }
 
+.shipping {
+  align-self: flex-end;
+}
+
 .delete {
   grid-area: delete;
 }
@@ -91,6 +95,14 @@ h3 {
       '. details delete'
       '. details .';
   }
+  .shipping {
+    border: 1px solid var(--primary-light);
+    border-radius: var(--radius);
+    padding: 20px;
+    h3 {
+      text-align: center;
+    }
+  }
   .checkout {
     width: 20%;
     align-self: center;
@@ -108,5 +120,19 @@ h3 {
     column-gap: 20px;
     grid-template-columns: 150px auto 100px 100px 100px;
     grid-template-areas: 'image details quantity price delete';
+  }
+  .shipping {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .rate {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 5px;
+      label {
+        position: relative !important;
+        font-size: 16px;
+      }
+    }
   }
 }

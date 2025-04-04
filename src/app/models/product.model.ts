@@ -7,7 +7,15 @@ export interface Product {
   description?: string;
   images: string[];
   featured: boolean;
+  shipping: ShippingRate[];
   options: ProductGroup[];
+}
+
+export interface ShippingRate {
+  display: string;
+  minimum: number;
+  maximum: number;
+  cost: number;
 }
 
 export interface ProductGroup {

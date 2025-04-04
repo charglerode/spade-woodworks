@@ -183,6 +183,60 @@
         </div>
       </div>
 
+      <h3>Shipping Rates</h3>
+      <button type="button" (click)="addShippingRate()">
+        <i class="fa-solid fa-plus"></i> Add Shipping Rate
+      </button>
+      <div formArrayName="shipping">
+        <div
+          class="option-card"
+          *ngFor="let rate of shipping.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div class="form-row">
+            <div class="form-group input-lg">
+              <input
+                id="shipping-display"
+                type="text"
+                formControlName="display"
+                placeholder="Rate Display"
+              />
+              <label for="shipping-display">Display</label>
+            </div>
+            <div class="form-group input-sm">
+              <input
+                id="shipping-minimum"
+                type="number"
+                formControlName="minimum"
+                placeholder="Rate Minimum"
+              />
+              <label for="shipping-minimum">Minimum (days)</label>
+            </div>
+            <div class="form-group input-sm">
+              <input
+                id="shipping-maximum"
+                type="number"
+                formControlName="maximum"
+                placeholder="Rate Maximum"
+              />
+              <label for="shipping-maximum">Maximum (days)</label>
+            </div>
+            <div class="form-group input-md">
+              <input
+                id="shipping-cost"
+                type="number"
+                formControlName="cost"
+                placeholder="Rate Cost"
+              />
+              <label for="shipping-cost">Cost</label>
+            </div>
+            <button class="delete" (click)="removeShippingRate(i)">
+              <i class="fa-solid fa-x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <h3>Options</h3>
       <button type="button" (click)="addGroup()">
         <i class="fa-solid fa-plus"></i> Add Group
