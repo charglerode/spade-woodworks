@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { RouterModule } from '@angular/router';
+import { DecodePipe } from '../../pipes/decode.pipe';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, DecodePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

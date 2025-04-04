@@ -18,6 +18,7 @@ import { GalleryDetailsComponent } from './pages/gallery/gallery-details/gallery
 import { GalleryEditComponent } from './pages/admin/gallery-edit/gallery-edit.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { TermsComponent } from './pages/terms/terms.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -55,6 +56,7 @@ export const routes: Routes = [
   { path: 'privacy', component: PrivacyComponent },
   { path: 'returns', component: ReturnsComponent },
   { path: 'shipping', component: ShippingComponent },
+  { path: 'terms', component: TermsComponent },
   { path: 'shopping-cart', component: CartComponent },
   { path: 'checkout/:id', component: CheckoutComponent },
   { path: 'login', component: LoginComponent },
