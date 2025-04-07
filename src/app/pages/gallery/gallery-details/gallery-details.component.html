@@ -1,1 +1,6 @@
-<p>gallery-details works!</p>
+<section>
+  <div class="root">
+    <h1>{{ piece.name }}</h1>
+    <div class="description" [innerHTML]="piece.description | decode"></div>
+  </div>
+</section>

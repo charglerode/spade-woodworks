@@ -3,6 +3,10 @@ export interface Gallery {
   name: string;
   teaser: string;
   description: string;
-  cover: string;
-  images: string[];
+  images: GalleryImage[];
+}
+
+export interface GalleryImage {
+  image: string;
+  caption: string;
 }

@@ -14,8 +14,18 @@ const gallery = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  cover: [String],
-  images: [String],
+  images: [
+    {
+      image: {
+        type: String,
+        trim: true,
+      },
+      caption: {
+        type: String,
+        trim: true,
+      },
+    },
+  ],
 });
 
 const Gallery = mongoose.model('Gallery', gallery);

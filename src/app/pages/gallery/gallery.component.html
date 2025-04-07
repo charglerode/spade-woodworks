@@ -8,7 +8,7 @@
         [routerLink]="['/gallery/', piece._id]"
         class="block"
       >
-        <img src="img/uploads/{{ piece.cover }}" />
+        <img src="img/uploads/{{ piece.images[0].image }}" />
         <div class="description">
           <h3>{{ piece.name }}</h3>
           <p>{{ piece.teaser }}</p>

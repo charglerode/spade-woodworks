@@ -1,12 +1,23 @@
-.images {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.image-list {
+  width: 100%;
 }
 
-button {
-  margin-bottom: 20px;
+.image-card {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 20px auto;
+  padding: 10px;
+  border: 1px solid var(--primary-light);
+  border-radius: var(--radius);
+  .form-row {
+    justify-content: flex-start;
+    align-items: center;
+    .input-lg {
+      width: 100%;
+    }
+  }
+}
+
+button:last-child {
+  margin-top: 50px;
 }

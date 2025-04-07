@@ -7,109 +7,69 @@
     </div>
     <form
       *ngIf="message === '' && error === ''"
-      [formGroup]="galleryForm"
-      enctype="multipart/form-data"
+      [formGroup]="articleForm"
       (ngSubmit)="onSubmit()"
+      enctype="multipart/form-data"
     >
-      <div class="images">
-        <input
-          #fileInput
-          type="file"
-          id="file-select"
-          class="file-select"
-          formArrayName="images"
-          multiple
-          accept="image/*"
-          (change)="onImageChange()"
-        />
-        <label class="file-label" for="file-select"
-          ><i class="fa-solid fa-arrow-up-from-bracket"></i
-        ></label>
-        <img
-          *ngFor="let image of piece?.images"
-          src="img/uploads/{{ image }}"
-          height="96"
-        />
-        <img *ngFor="let image of images" [src]="image" height="96" />
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <input
-            type="text"
-            id="name"
-            formControlName="name"
-            placeholder="Name"
-          />
-          <label for="name">Name</label>
-          <div
-            class="error"
-            *ngIf="
-              galleryForm.get('name')?.invalid &&
-              galleryForm.get('name')?.touched
-            "
-          >
-            <small *ngIf="galleryForm.get('name')?.errors?.['required']">
-              Name is required.
-            </small>
-            <small *ngIf="galleryForm.get('name')?.errors?.['pattern']">
-              Name must have at least 2 letters and can only include letters,
-              hyphens, and apostrophes.
-            </small>
-          </div>
-        </div>
-      </div>
-
       <div class="form-group">
-        <textarea
+        <input
+          id="name"
+          formControlName="name"
+          placeholder="Enter article name"
+        />
+        <label for="name">Name</label>
+      </div>
+      <div class="form-group">
+        <input
           id="teaser"
           formControlName="teaser"
-          placeholder="Teaser"
-          rows="3"
-        ></textarea>
+          placeholder="Enter article teaser"
+        />
         <label for="teaser">Teaser</label>
-        <div
-          class="error"
-          *ngIf="
-            galleryForm.get('teaser')?.invalid &&
-            galleryForm.get('teaser')?.touched
-          "
-        >
-          <small *ngIf="galleryForm.get('teaser')?.errors?.['required']">
-            Teaser is required.
-          </small>
-          <small *ngIf="galleryForm.get('teaser')?.errors?.['pattern']">
-            Teaser must be defined
-          </small>
-        </div>
       </div>
-
       <div class="form-group">
         <textarea
           id="description"
+          rows="10"
           formControlName="description"
-          placeholder="Description"
-          rows="7"
+          placeholder="Enter article description"
         ></textarea>
         <label for="description">Description</label>
+      </div>
+      <div class="image-list" formArrayName="images">
         <div
-          class="error"
-          *ngIf="
-            galleryForm.get('description')?.invalid &&
-            galleryForm.get('description')?.touched
-          "
+          class="image-card"
+          *ngFor="let imageGroup of images.controls; let i = index"
+          [formGroupName]="i"
         >
-          <small *ngIf="galleryForm.get('description')?.errors?.['required']">
-            Description is required.
-          </small>
-          <small *ngIf="galleryForm.get('description')?.errors?.['pattern']">
-            Description must be defined
-          </small>
+          <div class="form-row">
+            <button type="button" (click)="removeImage(i)">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+            <input
+              type="file"
+              class="file-select"
+              id="image-{{ i }}"
+              (change)="onFileChange($event, i)"
+            />
+            <label class="file-label" for="image-{{ i }}"
+              ><i class="fa-solid fa-arrow-up-from-bracket"></i
+            ></label>
+            <div class="form-group input-lg">
+              <textarea
+                id="caption-{{ i }}"
+                rows="4"
+                formControlName="caption"
+                placeholder="Caption"
+              ></textarea>
+              <label for="caption-{{ i }}">Caption</label>
+            </div>
+          </div>
         </div>
       </div>
-      <button *ngIf="!piece" type="submit" [disabled]="galleryForm.invalid">
-        Add Gallery Piece
-      </button>
+      <button type="button" (click)="addImage()">Add Image</button>
       <button *ngIf="piece" type="submit">Update Gallery Piece</button>
+      <button *ngIf="!piece" type="submit">Add Gallery Piece</button>
     </form>
   </div>
 </section>

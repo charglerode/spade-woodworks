@@ -24,20 +24,26 @@
       </div>
       <div class="group links">
         <a routerLink="/products" routerLinkActive="active">products</a>
+        <span class="divider">•</span>
         <a routerLink="/gallery" routerLinkActive="active">gallery</a>
+        <span class="divider">•</span>
         <a routerLink="/commissions" routerLinkActive="active">commissions</a>
+        <span class="divider">•</span>
         <a routerLink="/contact" routerLinkActive="active">contact</a>
       </div>
       <div class="group legal">
         <a routerLink="/privacy">privacy policy</a>
-        <a routerLink="/shipping">shipping</a>
+        <span class="divider">•</span>
+        <!-- <a routerLink="/shipping">shipping</a>
+        <span class="divider">•</span>
         <a routerLink="/returns">return policy</a>
+        <span class="divider">•</span> -->
         <a routerLink="/terms">terms of use</a>
       </div>
     </div>
     <div class="copy">
       <p>
-        &copy; 2025 <a routerLink="/admin">S</a>pade Woodworks. All rights
+        &copy; {{ year }} <a routerLink="/admin">S</a>pade Woodworks. All rights
         reserved.
       </p>
     </div>

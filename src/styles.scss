@@ -147,7 +147,7 @@ form {
   width: 15%;
 }
 
-input:not([type='checkbox']):not([type='radio']),
+input:not([type='checkbox']),
 textarea,
 select {
   font-family: inherit;
@@ -176,8 +176,8 @@ select:placeholder-shown ~ label {
   top: 20px;
 }
 
-label:not([type='checkbox']):not([type='radio']),
-input:focus ~ label:not([type='checkbox']):not([type='radio']),
+label:not([type='checkbox']),
+input:focus ~ label:not([type='checkbox']),
 textarea:focus ~ label,
 select:focus ~ label {
   position: absolute;
@@ -292,6 +292,28 @@ select:focus {
   align-items: center;
   gap: 40px;
   margin: 25px auto;
+}
+
+.preview {
+  box-sizing: border-box;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--primary-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+  padding: 5px;
+  img {
+    margin: 5px;
+  }
+  caption {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: var(--primary-light);
+  }
 }
 
 // RESPONSIVE

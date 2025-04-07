@@ -1,0 +1,16 @@
+h1 {
+  text-align: center;
+}
+
+.teaser {
+  margin: 20px auto;
+}
+
+.description {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+}

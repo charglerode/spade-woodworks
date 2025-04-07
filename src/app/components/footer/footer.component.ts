@@ -14,6 +14,7 @@ export class FooterComponent implements OnDestroy {
     attribution: 'Abraham Lincoln',
   };
   interval: any;
+  year = new Date().getFullYear();
 
   constructor(private service: QuoteService) {
     this.quote = this.service.getQuote();

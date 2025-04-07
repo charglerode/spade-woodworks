@@ -68,6 +68,10 @@
   }
 }
 
+.divider {
+  color: var(--text-on-dark);
+}
+
 @media all and (min-width: 700px) {
   .container {
     flex-direction: row;
@@ -89,5 +93,8 @@
   .legal {
     order: 3;
     gap: 10px;
+  }
+  .divider {
+    display: none;
   }
 }

@@ -15,31 +15,21 @@ const upload = multer({
   },
 });
 
-exports.uploadImages = upload.fields([
-  { name: 'cover', maxCount: 1 },
-  { name: 'images' },
-]);
+exports.uploadImages = upload.any();
 
 exports.resizeImages = catchAsync(async (req, res, next) => {
-  if (!req.files.cover || !req.files.images) return next();
+  if (!req.files) return next();
 
-  req.body.cover = `${req.files.cover[0].originalname.split('.')[0]}-${Date.now()}-cover.jpg`;
-  await sharp(req.files.cover[0].buffer)
-    .resize(1024, 768)
-    .toFormat('jpg')
-    .jpeg({ quality: 90 })
-    .toFile(`../public/img/uploads/${req.body.cover}`);
-
-  req.body.images = [];
   await Promise.all(
-    req.files.images.map(async (file, i) => {
+    req.files.map(async (file, i) => {
+      const index = file.fieldname.split('[')[1].split(']')[0];
       const filename = `${file.originalname.split('.')[0]}-${Date.now()}-${i + 1}.jpg`;
       await sharp(file.buffer)
-        .resize(800, 600)
+        .resize(640, 480)
         .toFormat('jpg')
-        .jpeg({ quality: 90 })
+        .jpeg({ quality: 80 })
         .toFile(`../public/img/uploads/${filename}`);
-      req.body.images.push(filename);
+      req.body.images[index].image = filename;
     }),
   );
   next();
@@ -76,9 +66,6 @@ exports.getGalleryPiece = catchAsync(async (req, res, next) => {
 });
 
 exports.createGalleryPiece = catchAsync(async (req, res, next) => {
-  if (req.file) {
-    req.body.images = req.file.filename;
-  }
   const piece = await Gallery.create(req.body);
 
   res.status(201).json({
@@ -90,9 +77,6 @@ exports.createGalleryPiece = catchAsync(async (req, res, next) => {
 });
 
 exports.updateGalleryPiece = catchAsync(async (req, res, next) => {
-  if (req.file) {
-    req.body.images = req.file.filename;
-  }
   const piece = await Gallery.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
