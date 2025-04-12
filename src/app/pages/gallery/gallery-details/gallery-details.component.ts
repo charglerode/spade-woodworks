@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { Gallery } from '../../../models/gallery.model';
 import { GalleryService } from '../../../services/gallery.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DecodePipe } from '../../../pipes/decode.pipe';
 
 @Component({
   selector: 'app-gallery-details',
-  imports: [DecodePipe],
+  imports: [RouterModule, DecodePipe],
   templateUrl: './gallery-details.component.html',
   styleUrl: './gallery-details.component.scss',
 })

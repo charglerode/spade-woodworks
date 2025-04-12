@@ -67,7 +67,9 @@
           </div>
         </div>
       </div>
-      <button type="button" (click)="addImage()">Add Image</button>
+      <button type="button" (click)="addImage()">
+        <i class="fa-solid fa-plus"></i> Add Image
+      </button>
       <button *ngIf="piece" type="submit">Update Gallery Piece</button>
       <button *ngIf="!piece" type="submit">Add Gallery Piece</button>
     </form>
